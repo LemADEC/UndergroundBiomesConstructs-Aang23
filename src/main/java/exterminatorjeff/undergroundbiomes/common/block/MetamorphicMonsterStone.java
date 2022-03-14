@@ -9,6 +9,7 @@ import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -122,7 +123,7 @@ public class MetamorphicMonsterStone extends UBStone {
   @Override
   public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
     OresRegistry.INSTANCE.setRecheck(world, pos);
-    return super.isReplaceableOreGen(state, world, pos, target); //To change body of generated methods, choose Tools | Templates.
+    return target.apply(Blocks.MONSTER_EGG.getDefaultState());
   }
 
   @Override

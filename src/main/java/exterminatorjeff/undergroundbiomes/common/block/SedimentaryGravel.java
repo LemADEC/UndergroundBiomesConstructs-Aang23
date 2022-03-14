@@ -3,6 +3,8 @@ package exterminatorjeff.undergroundbiomes.common.block;
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -15,7 +17,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
@@ -53,9 +54,9 @@ public class SedimentaryGravel extends SedimentaryStone {
   }
 
   @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos,
-      Predicate<IBlockState> target) {
-    return false;
+  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.GRAVEL.getDefaultState());
   }
 
   // Taken from Vanilla's BlockFalling

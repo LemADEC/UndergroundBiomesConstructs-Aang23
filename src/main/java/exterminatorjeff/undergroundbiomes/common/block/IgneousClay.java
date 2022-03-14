@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -43,15 +45,15 @@ public class IgneousClay extends IgneousStone {
   }
 
   @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos,
-      Predicate<IBlockState> target) {
-    return false;
+  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.CLAY.getDefaultState());
   }
 
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     ItemStack itemStack = new ItemStack(Items.CLAY_BALL, 4);
-    List<ItemStack> result = new ArrayList<ItemStack>();
+    List<ItemStack> result = new ArrayList<>();
     result.add(itemStack);
     DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
     return result;

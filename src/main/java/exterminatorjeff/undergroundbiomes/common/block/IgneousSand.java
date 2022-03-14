@@ -9,6 +9,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -54,9 +56,9 @@ public class IgneousSand extends IgneousStone {
   }
 
   @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos,
-      Predicate<IBlockState> target) {
-    return false;
+  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.SAND.getDefaultState());
   }
 
   // Taken from Vanilla's BlockFalling

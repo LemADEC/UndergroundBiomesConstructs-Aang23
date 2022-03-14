@@ -1,11 +1,9 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
-import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneType;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
-import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -105,12 +103,6 @@ public class MetamorphicStone extends UBStone {
     ItemStack itemStack = new ItemStack(cobbleBlock, 1, meta);
     stacks.add(itemStack);
     DropsRegistry.INSTANCE.addDrops(stacks, this, world, pos, state, fortune);
-  }
-
-  @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
-    OresRegistry.INSTANCE.setRecheck(world, pos);
-    return super.isReplaceableOreGen(state, world, pos, target); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override

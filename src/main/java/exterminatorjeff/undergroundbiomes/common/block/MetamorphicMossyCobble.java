@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import java.util.Random;
@@ -12,6 +13,8 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.item.ItemStack;
 import java.util.List;
 import java.util.ArrayList;
@@ -38,9 +41,9 @@ public class MetamorphicMossyCobble extends MetamorphicStone {
   }
 
   @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos,
-      Predicate<IBlockState> target) {
-    return false;
+  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.MOSSY_COBBLESTONE.getDefaultState());
   }
 
   @Override

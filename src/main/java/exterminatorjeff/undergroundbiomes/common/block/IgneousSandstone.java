@@ -6,8 +6,10 @@ import java.util.Random;
 
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
-import net.minecraft.block.Block;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -32,7 +34,8 @@ public class IgneousSandstone extends IgneousStone {
 
   @Override
   public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
-    return false;
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.SANDSTONE.getDefaultState());
   }
 
   @Override

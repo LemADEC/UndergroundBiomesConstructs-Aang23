@@ -6,14 +6,14 @@ import java.util.Random;
 
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
-import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -52,9 +52,9 @@ public class MetamorphicSand extends MetamorphicStone {
   }
 
   @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos,
-      Predicate<IBlockState> target) {
-    return false;
+  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.SAND.getDefaultState());
   }
 
   // Taken from Vanilla's BlockFalling

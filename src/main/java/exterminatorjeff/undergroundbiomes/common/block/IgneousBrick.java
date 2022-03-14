@@ -3,8 +3,11 @@ package exterminatorjeff.undergroundbiomes.common.block;
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
+import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +34,8 @@ public class IgneousBrick extends IgneousStone {
 
   @Override
   public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
-    return false;
+    OresRegistry.INSTANCE.setRecheck(world, pos);
+    return target.apply(Blocks.BRICK_BLOCK.getDefaultState());
   }
 
   @Override
