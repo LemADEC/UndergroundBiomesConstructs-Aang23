@@ -322,7 +322,7 @@ public enum OresRegistry implements UBOresRegistry {
   public void setRecheck(IBlockAccess world, BlockPos pos) {
     synchronized (storedLocations) {
       ChunkPos chunkID = new ChunkPos(pos);
-      blockPosList(world, chunkID).add(pos);
+      blockPosList(world, chunkID).add(pos.toImmutable());
     }
   }
 
