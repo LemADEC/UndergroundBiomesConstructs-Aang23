@@ -64,8 +64,7 @@ public enum OresRegistry implements UBOresRegistry {
    * Ores registering
    */
 
-  private boolean alreadySetup = false;
-  private final Set<UBifyRequest> requests = new HashSet<UBifyRequest>();
+  private final Set<UBifyRequest> requests = new HashSet<>();
   private final Map<String, OreEntry> ubifiedOres = new HashMap<>();
   @SuppressWarnings("unused")
   private final Map<String, ArrayList<String>> oreDirectories = new HashMap<>();
@@ -151,7 +150,7 @@ public enum OresRegistry implements UBOresRegistry {
 
   @Override
   public void requestOreSetup(Block baseOre, IUBOreConfig config) {
-    if (UndergroundBiomes.areBlocksAlreadyRegistered || alreadySetup)
+    if (UndergroundBiomes.areBlocksAlreadyRegistered)
       throw new RuntimeException(format(REQUEST_ERROR_MSG, baseOre, config.getMeta()));
     else {
       requests.add(new UBifyRequest(baseOre, config));
@@ -303,18 +302,18 @@ public enum OresRegistry implements UBOresRegistry {
     return ((World) access).provider.getDimension();
   }
 
-  private final HashMap<Integer, HashMap<ChunkPos, ArrayList<BlockPos>>> storedLocations = new HashMap<Integer, HashMap<ChunkPos, ArrayList<BlockPos>>>();
+  private final HashMap<Integer, HashMap<ChunkPos, ArrayList<BlockPos>>> storedLocations = new HashMap<>();
 
   private final ArrayList<BlockPos> blockPosList(IBlockAccess world, ChunkPos chunkID) {
     int dimension = dimension(world);
     HashMap<ChunkPos, ArrayList<BlockPos>> worldMap = storedLocations.get(dimension);
     if (worldMap == null) {
-      worldMap = new HashMap<ChunkPos, ArrayList<BlockPos>>();
+      worldMap = new HashMap<>();
       storedLocations.put(dimension, worldMap);
     }
     ArrayList<BlockPos> result = worldMap.get(chunkID);
     if (result == null) {
-      result = new ArrayList<BlockPos>();
+      result = new ArrayList<>();
       worldMap.put(chunkID, result);
     }
     return result;
@@ -332,7 +331,7 @@ public enum OresRegistry implements UBOresRegistry {
     synchronized (storedLocations) {
       int dimension = dimension(world);
       result = storedLocations.get(dimension);
-      if (result == null) result = new HashMap<ChunkPos, ArrayList<BlockPos>>();
+      if (result == null) result = new HashMap<>();
       storedLocations.remove(dimension);
     }
     return result;
