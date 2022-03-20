@@ -115,6 +115,7 @@ jar {
     destinationDir = file 'output'
 }
 
+/*
 uploadArchives {
     repositories {
        mavenDeployer {
@@ -127,3 +128,4 @@ uploadArchives {
        }
     }
 }
+*/
