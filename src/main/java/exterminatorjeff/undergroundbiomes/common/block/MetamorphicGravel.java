@@ -35,7 +35,7 @@ public class MetamorphicGravel extends MetamorphicStone {
 
   public MetamorphicGravel() {
     super();
-    setSoundType(SoundType.SAND);
+    setSoundType(SoundType.GROUND);
   }
 
   @Override

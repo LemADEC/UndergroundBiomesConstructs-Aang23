@@ -35,7 +35,7 @@ public class IgneousGravel extends IgneousStone {
 
   public IgneousGravel() {
     super();
-    setSoundType(SoundType.SAND);
+    setSoundType(SoundType.GROUND);
   }
 
   @Override

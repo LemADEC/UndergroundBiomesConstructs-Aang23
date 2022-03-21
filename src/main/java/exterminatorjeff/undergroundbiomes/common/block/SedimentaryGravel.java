@@ -35,7 +35,7 @@ public class SedimentaryGravel extends SedimentaryStone {
 
   public SedimentaryGravel() {
     super();
-    setSoundType(SoundType.SAND);
+    setSoundType(SoundType.GROUND);
   }
 
   @Override
