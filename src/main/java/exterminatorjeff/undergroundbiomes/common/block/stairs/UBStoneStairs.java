@@ -100,7 +100,8 @@ public abstract class UBStoneStairs extends BlockStairs implements UBSubBlock {
 
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-    return new ItemStack(itemBlock, 1, getMetaFromState(state));
+    // There is no reverse stairs item
+    return new ItemStack(itemBlock, 1, getMetaFromState(state) & 7);
   }
 
   /**
