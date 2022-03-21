@@ -143,12 +143,6 @@ public class UBConfig implements UBSettings {
     blockActivations.put(metadata, generationConfig);
   }
 
-  /**
-   * Must be called be called in pre-init and before any blocks or items are
-   * created.
-   *
-   * @param event
-   */
   public void init(File file) {
     LOGGER.info("Loading configuration");
 

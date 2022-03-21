@@ -1,6 +1,8 @@
 package exterminatorjeff.undergroundbiomes.common.block.wall;
 
 import com.google.common.collect.ImmutableMap;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.block.properties.IProperty;
@@ -9,12 +11,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * To not add the VARIANT property from BlockWall
  *
  * @author LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 class UBStoneWallStateContainer extends BlockStateContainer {
 
   public UBStoneWallStateContainer(Block blockIn, IProperty<?>... properties) {
@@ -26,7 +31,7 @@ class UBStoneWallStateContainer extends BlockStateContainer {
     return new CustomStateImplementation(block, properties);
   }
 
-  private class CustomStateImplementation extends StateImplementation {
+  private static class CustomStateImplementation extends StateImplementation {
 
     protected CustomStateImplementation(Block blockIn, ImmutableMap<IProperty<?>, Comparable<?>> propertiesIn) {
       super(blockIn, propertiesIn);

@@ -1,10 +1,11 @@
 package exterminatorjeff.undergroundbiomes.common.block.slab;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 import exterminatorjeff.undergroundbiomes.api.API;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,6 +19,8 @@ import net.minecraft.world.World;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class UBIgneousStoneSlabHalf extends UBIgneousStoneSlab {
 
   @Override
@@ -38,19 +41,9 @@ public class UBIgneousStoneSlabHalf extends UBIgneousStoneSlab {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(API.IGNEOUS_STONE_SLAB.getItem(), 1, meta >= 8 ? meta - 8 : meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(API.IGNEOUS_STONE_SLAB.getItem(), 1, meta >= 8 ? meta - 8 : meta);
+    ItemStack itemStack = new ItemStack(API.IGNEOUS_STONE_SLAB.getItem(), 1, meta & 7);
     stacks.add(itemStack);
   }
 }

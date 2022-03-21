@@ -1,8 +1,12 @@
 package exterminatorjeff.undergroundbiomes.common.block.wall;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.names.BlockEntry;
 import exterminatorjeff.undergroundbiomes.common.block.UBStone;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 
@@ -12,6 +16,8 @@ import static exterminatorjeff.undergroundbiomes.api.enums.IgneousVariant.IGNEOU
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class UBWallIgneous extends UBStoneWall {
 
   public UBWallIgneous(BlockEntry baseStoneEntry) {

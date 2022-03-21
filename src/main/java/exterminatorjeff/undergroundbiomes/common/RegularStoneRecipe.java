@@ -1,5 +1,7 @@
 package exterminatorjeff.undergroundbiomes.common;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import exterminatorjeff.undergroundbiomes.api.common.UBLogger;
 import exterminatorjeff.undergroundbiomes.config.SettingTracker;
 import net.minecraft.init.Blocks;
@@ -7,28 +9,29 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+
+import mcp.MethodsReturnNonnullByDefault;
 import org.apache.logging.log4j.Level;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public final class RegularStoneRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe, SettingTracker<Integer> {
 
   private static final UBLogger LOGGER = new UBLogger(RegularStoneRecipe.class, Level.INFO);
 
-  private IRecipe recipe = null;
-  private String registryName = "undergroundbiomes:regular_cobblestone";
-  private ResourceLocation resourceLocation = null;
+  private IRecipe recipe;
 
   public RegularStoneRecipe() {
-    recipe = new ShapedOreRecipe(resourceLocation, new ItemStack(Blocks.COBBLESTONE, 4), "XX", "XX", 'X', "cobblestone");
-    setRegistryName(registryName);
+    recipe = new ShapedOreRecipe(getRegistryName(), new ItemStack(Blocks.COBBLESTONE, 4), "XX", "XX", 'X', "cobblestone");
+    setRegistryName("undergroundbiomes:regular_cobblestone");
   }
 
   @Override
@@ -38,50 +41,31 @@ public final class RegularStoneRecipe extends IForgeRegistryEntry.Impl<IRecipe> 
     // Create the new recipes
     switch (value) {
       case 1:
-        recipe = new ShapelessOreRecipe(resourceLocation, Blocks.COBBLESTONE, new OreIngredient("cobblestone"));
+        recipe = new ShapelessOreRecipe(null, Blocks.COBBLESTONE, new OreIngredient("cobblestone"));
         break;
       case 2:
-        recipe = new ShapelessOreRecipe(resourceLocation, Blocks.COBBLESTONE, new OreIngredient("cobblestone"), Items.REDSTONE);
+        recipe = new ShapelessOreRecipe(null, Blocks.COBBLESTONE, new OreIngredient("cobblestone"), Items.REDSTONE);
         break;
       case 3:
-        recipe = new ShapedOreRecipe(resourceLocation, new ItemStack(Blocks.COBBLESTONE, 1), "XX", "XX", 'X', "cobblestone");
+        recipe = new ShapedOreRecipe(null, new ItemStack(Blocks.COBBLESTONE, 1), "XX", "XX", 'X', "cobblestone");
         break;
       case 4:
-        recipe = new ShapedOreRecipe(resourceLocation, new ItemStack(Blocks.COBBLESTONE, 4), "XX", "XX", 'X', "cobblestone");
+        recipe = new ShapedOreRecipe(null, new ItemStack(Blocks.COBBLESTONE, 4), "XX", "XX", 'X', "cobblestone");
+        break;
     }
-    LOGGER.debug("recipe output" + recipe.getRecipeOutput().getDisplayName());
   }
 
-
-  /**
-   * Used to check if a recipe matches current crafting inventory
-   *
-   * @param inv
-   * @param worldIn
-   */
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn)
   {
-    //LOGGER.debug("Matching stone recipe: " + recipe.matches(inv, worldIn));
     return recipe.matches(inv, worldIn);
   }
 
-  /**
-   * Returns an Item that is the result of this recipe
-   *
-   * @param inv
-   */
   @Override
   public ItemStack getCraftingResult(InventoryCrafting inv) {
     return recipe.getCraftingResult(inv);
   }
 
-  /**
-   * Used to determine if this recipe can fit in a grid of the given width/height
-   *
-   * @param width
-   * @param height
-   */
   @Override
   public boolean canFit(int width, int height) {
     return recipe.canFit(width, height);

@@ -1,13 +1,26 @@
 package exterminatorjeff.undergroundbiomes.api.enums;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
+
+import mcp.MethodsReturnNonnullByDefault;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public enum MetamorphicVariant implements IStringSerializable, Variant<MetamorphicVariant> {
-  GNEISS(1.1F, 1.11F), ECLOGITE(1.0F, 1.0F), MARBLE(1.1F, 1.11F), QUARTZITE(1.3F, 1.26F), BLUESCHIST(0.7F, 0.54F), GREENSCHIST(0.7F, 0.54F), SOAPSTONE(0.4F, 0.2F), MIGMATITE(0.9F, 0.86F);
+  GNEISS      (1.1F, 1.11F),
+  ECLOGITE    (1.0F, 1.0F),
+  MARBLE      (1.1F, 1.11F),
+  QUARTZITE   (1.3F, 1.26F),
+  BLUESCHIST  (0.7F, 0.54F),
+  GREENSCHIST (0.7F, 0.54F),
+  SOAPSTONE   (0.4F, 0.2F),
+  MIGMATITE   (0.9F, 0.86F);
 
   public static final MetamorphicVariant[] METAMORPHIC_VARIANTS = values();
   public static final int NB_VARIANTS = values().length;
@@ -16,7 +29,7 @@ public enum MetamorphicVariant implements IStringSerializable, Variant<Metamorph
   private final float hardness;
   private final float resistance;
 
-  private MetamorphicVariant(float hardness, float resistance) {
+  MetamorphicVariant(float hardness, float resistance) {
     this.hardness = hardness;
     this.resistance = resistance;
   }

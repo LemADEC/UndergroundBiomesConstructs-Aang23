@@ -595,7 +595,7 @@ public class CommonProxy {
   }
 
   public void createRecipes(RegistryEvent.Register<IRecipe> event) {
-    IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
+    IForgeRegistryModifiable<IRecipe> modRegistry = (IForgeRegistryModifiable<IRecipe>) event.getRegistry();
 
     for (int i = 0; i < IgneousVariant.NB_VARIANTS; ++i) {
       GameRegistry.addSmelting(new ItemStack(API.IGNEOUS_COBBLE.getItemBlock(), 1, i),

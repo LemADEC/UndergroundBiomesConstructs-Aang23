@@ -1,7 +1,11 @@
 package exterminatorjeff.undergroundbiomes.common.block.stairs;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import exterminatorjeff.undergroundbiomes.common.UBSubBlock;
 import exterminatorjeff.undergroundbiomes.common.itemblock.StairsItemBlock;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.BlockStateContainer;
@@ -31,6 +35,8 @@ import java.util.Random;
  *
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public abstract class UBStoneStairs extends BlockStairs implements UBSubBlock {
 
   public final EnumFacing facing;
@@ -67,19 +73,6 @@ public abstract class UBStoneStairs extends BlockStairs implements UBSubBlock {
   }
 
   @Override
-  public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-    IBlockState result = super.getActualState(state, worldIn, pos);
-    return result;
-  }
-
-
-  @Override
-  public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
-    IBlockState result = super.getExtendedState(state, world, pos);
-    return result;
-  }
-
-  @Override
   public int getMetaFromState(IBlockState state) {
     int i = baseStone().getMetaFromState(state);
     if (state.getValue(HALF) == EnumHalf.TOP)
@@ -87,12 +80,6 @@ public abstract class UBStoneStairs extends BlockStairs implements UBSubBlock {
     return i;
   }
 
-  /**
-   * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-   *
-   * @param itemIn
-   * @param items
-   */
   @SideOnly(Side.CLIENT)
   @Override
   public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> list) {

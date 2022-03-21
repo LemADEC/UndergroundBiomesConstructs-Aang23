@@ -1,8 +1,12 @@
 package exterminatorjeff.undergroundbiomes.common.block.slab;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import exterminatorjeff.undergroundbiomes.client.UBCreativeTab;
 import exterminatorjeff.undergroundbiomes.common.UBSubBlock;
 import exterminatorjeff.undergroundbiomes.common.itemblock.SlabItemBlock;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -23,13 +27,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public abstract class UBStoneSlab extends BlockSlab implements UBSubBlock {
 
   private SlabItemBlock itemBlock;
@@ -57,11 +62,16 @@ public abstract class UBStoneSlab extends BlockSlab implements UBSubBlock {
 
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    NonNullList<ItemStack> ret = NonNullList.create();
+    getDrops(ret, world, pos, state, fortune);
+    return ret;
+  }
+
+  @Override
+  public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     int numberDropped = isDouble() ? 2 : 1;
-    ItemStack dropped = new ItemStack(itemBlock, numberDropped, damageDropped(this.getStateById(this.getStateId(state)))); 
-    List<ItemStack> result = new ArrayList<ItemStack>(1);
-    result.add(dropped);
-    return result;
+    ItemStack dropped = new ItemStack(itemBlock, numberDropped, damageDropped(state));
+    drops.add(dropped);
   }
 
   @Override
@@ -102,9 +112,7 @@ public abstract class UBStoneSlab extends BlockSlab implements UBSubBlock {
 
   @Override
   public int damageDropped(IBlockState state) {
-    int result = getMetaFromState(state);
-    if (result > 8) result -= 8;
-    return result;
+    return getMetaFromState(state) & 7;
   }
 
   @SideOnly(Side.CLIENT)

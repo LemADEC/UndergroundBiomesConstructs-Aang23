@@ -1,13 +1,26 @@
 package exterminatorjeff.undergroundbiomes.api.enums;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
+
+import mcp.MethodsReturnNonnullByDefault;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public enum SedimentaryVariant implements IStringSerializable, Variant<SedimentaryVariant> {
-  LIMESTONE(0.5F, 0.29F), CHALK(0.5F, 0.29F), SHALE(0.5F, 0.29F), SILTSTONE(0.6F, 0.4F), LIGNITE(0.5F, 0.29F), DOLOMITE(0.5F, 0.29F), GREYWACKE(1.0F, 1.0F), CHERT(0.9F, 0.86F);
+  LIMESTONE (0.5F, 0.29F),
+  CHALK     (0.5F, 0.29F),
+  SHALE     (0.5F, 0.29F),
+  SILTSTONE (0.6F, 0.4F),
+  LIGNITE   (0.5F, 0.29F),
+  DOLOMITE  (0.5F, 0.29F),
+  GREYWACKE (1.0F, 1.0F),
+  CHERT     (0.9F, 0.86F);
 
   public static final SedimentaryVariant[] SEDIMENTARY_VARIANTS = values();
   public static final int NB_VARIANTS = values().length;
@@ -16,7 +29,7 @@ public enum SedimentaryVariant implements IStringSerializable, Variant<Sedimenta
   private final float hardness;
   private final float resistance;
 
-  private SedimentaryVariant(float hardness, float resistance) {
+  SedimentaryVariant(float hardness, float resistance) {
     this.hardness = hardness * 1.5F;
     this.resistance = resistance * 1.66F;
   }

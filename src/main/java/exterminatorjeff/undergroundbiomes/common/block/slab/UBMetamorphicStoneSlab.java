@@ -1,7 +1,11 @@
 package exterminatorjeff.undergroundbiomes.common.block.slab;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.common.block.UBStone;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +20,8 @@ import static exterminatorjeff.undergroundbiomes.api.enums.MetamorphicVariant.ME
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public abstract class UBMetamorphicStoneSlab extends UBStoneSlab {
 
   public UBMetamorphicStoneSlab() {
@@ -43,8 +49,7 @@ public abstract class UBMetamorphicStoneSlab extends UBStoneSlab {
   }
 
   @Override
-  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
-      EntityPlayer player) {
-    return new ItemStack(this.getItemBlock(), 1, METAMORPHIC_VARIANTS[getMetaFromState(state) & 7].ordinal());
+  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    return new ItemStack(getItemBlock(), 1, METAMORPHIC_VARIANTS[getMetaFromState(state) & 7].ordinal());
   }
 }

@@ -1,13 +1,26 @@
 package exterminatorjeff.undergroundbiomes.api.enums;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
+
+import mcp.MethodsReturnNonnullByDefault;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public enum IgneousVariant implements IStringSerializable, Variant<IgneousVariant> {
-  RED_GRANITE(1.7F, 1.42F), BLACK_GRANITE(1.6F, 1.39F), RHYOLITE(1.3F, 1.26F), ANDESITE(1.4F, 1.31F), GABBRO(1.0F, 1.0F), BASALT(1.4F, 1.31F), KOMATIITE(1.5F, 1.35F), DACITE(1.2F, 1.2F);
+  RED_GRANITE   (1.7F, 1.42F),
+  BLACK_GRANITE (1.6F, 1.39F),
+  RHYOLITE      (1.3F, 1.26F),
+  ANDESITE      (1.4F, 1.31F),
+  GABBRO        (1.0F, 1.0F),
+  BASALT        (1.4F, 1.31F),
+  KOMATIITE     (1.5F, 1.35F),
+  DACITE        (1.2F, 1.2F);
 
   public static final IgneousVariant[] IGNEOUS_VARIANTS = values();
   public static final int NB_VARIANTS = values().length;
@@ -16,7 +29,7 @@ public enum IgneousVariant implements IStringSerializable, Variant<IgneousVarian
   private final float hardness;
   private final float resistance;
 
-  private IgneousVariant(float hardness, float resistance) {
+  IgneousVariant(float hardness, float resistance) {
     this.hardness = hardness;
     this.resistance = resistance;
   }

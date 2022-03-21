@@ -1,8 +1,12 @@
 package exterminatorjeff.undergroundbiomes.common.block.wall;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import exterminatorjeff.undergroundbiomes.api.names.BlockEntry;
 import exterminatorjeff.undergroundbiomes.client.UBCreativeTab;
 import exterminatorjeff.undergroundbiomes.common.UBSubBlock;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockWall;
@@ -23,6 +27,8 @@ import net.minecraft.util.text.translation.I18n;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public abstract class UBStoneWall extends BlockWall implements UBSubBlock {
 
   private final ItemBlock itemBlock;
@@ -31,11 +37,11 @@ public abstract class UBStoneWall extends BlockWall implements UBSubBlock {
     super(baseStoneEntry.getBlock());
     this.itemBlock = new UBItemWall(this);
     setCreativeTab(UBCreativeTab.UB_BLOCKS_TAB);
-    setDefaultState(blockState.getBaseState()//
-      .withProperty(UP, false)//
-      .withProperty(NORTH, false)//
-      .withProperty(EAST, false)//
-      .withProperty(SOUTH, false)//
+    setDefaultState(blockState.getBaseState()
+      .withProperty(UP, false)
+      .withProperty(NORTH, false)
+      .withProperty(EAST, false)
+      .withProperty(SOUTH, false)
       .withProperty(WEST, false));
   }
 
@@ -78,15 +84,17 @@ public abstract class UBStoneWall extends BlockWall implements UBSubBlock {
   private boolean canConnectTo(IBlockAccess worldIn, BlockPos pos) {
     IBlockState state = worldIn.getBlockState(pos);
     Block block = state.getBlock();
-    if (block instanceof UBStoneWall || block instanceof BlockWall)
+    if (block instanceof BlockWall) {
       return true;
-    if (block == Blocks.BARRIER)
+    }
+    if (block == Blocks.BARRIER) {
       return false;
-    if (block != this && !(block instanceof BlockFenceGate)) {
-      if (state.getMaterial().isOpaque() && state.isFullCube())
+    }
+    if (!(block instanceof BlockFenceGate)) {
+      if (state.getMaterial().isOpaque() && state.isFullCube()) {
         return state.getMaterial() != Material.GOURD;
-      else
-        return false;
+      }
+      return false;
     }
     return true;
   }
