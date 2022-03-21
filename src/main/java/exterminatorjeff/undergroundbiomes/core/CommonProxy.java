@@ -629,9 +629,16 @@ public class CommonProxy {
       modRegistry.remove(new ResourceLocation("minecraft:sandstone"));
     }
 
+    // register a morphing recipe to support configuration change
     RegularStoneRecipe regularCobblestoneRecipe = new RegularStoneRecipe();
-    modRegistry.register(regularCobblestoneRecipe);
     ((UBConfig) (UBConfig.SPECIFIC)).regularStoneCrafting.addTrackerAndUpdate(regularCobblestoneRecipe);
+    modRegistry.register(regularCobblestoneRecipe);
+    // register the current actual recipe so that it'll show up in JEI
+    if (regularCobblestoneRecipe.getRecipe() != null) {
+      modRegistry.register(regularCobblestoneRecipe.getRecipe());
+    }
+
+
     ((UBConfig) (UBConfig.SPECIFIC)).changeButtonRecipe.addTrackerAndUpdate(new ButtonRecipe());
     // This will probably be needed here in 1.13
     // API.ORES_REGISTRY.registerRecipes(event);

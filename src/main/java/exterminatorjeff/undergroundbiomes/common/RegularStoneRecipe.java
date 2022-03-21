@@ -1,5 +1,6 @@
 package exterminatorjeff.undergroundbiomes.common;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import exterminatorjeff.undergroundbiomes.api.common.UBLogger;
@@ -40,6 +41,9 @@ public final class RegularStoneRecipe extends IForgeRegistryEntry.Impl<IRecipe> 
 
     // Create the new recipes
     switch (value) {
+      case 0:
+        recipe = null;
+        return;
       case 1:
         recipe = new ShapelessOreRecipe(null, Blocks.COBBLESTONE, new OreIngredient("cobblestone"));
         break;
@@ -53,26 +57,32 @@ public final class RegularStoneRecipe extends IForgeRegistryEntry.Impl<IRecipe> 
         recipe = new ShapedOreRecipe(null, new ItemStack(Blocks.COBBLESTONE, 4), "XX", "XX", 'X', "cobblestone");
         break;
     }
+    recipe.setRegistryName(getRegistryName());
   }
 
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn)
   {
-    return recipe.matches(inv, worldIn);
+    return recipe != null && recipe.matches(inv, worldIn);
   }
 
   @Override
   public ItemStack getCraftingResult(InventoryCrafting inv) {
-    return recipe.getCraftingResult(inv);
+    return recipe != null ? recipe.getCraftingResult(inv) : ItemStack.EMPTY;
   }
 
   @Override
   public boolean canFit(int width, int height) {
-    return recipe.canFit(width, height);
+    return recipe != null && recipe.canFit(width, height);
   }
 
   @Override
   public ItemStack getRecipeOutput() {
-    return recipe.getRecipeOutput();
+    return recipe != null ? recipe.getRecipeOutput() : ItemStack.EMPTY;
+  }
+
+  @Nullable
+  public IRecipe getRecipe() {
+    return recipe;
   }
 }
