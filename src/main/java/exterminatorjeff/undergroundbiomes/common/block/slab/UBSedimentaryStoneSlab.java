@@ -50,6 +50,6 @@ public abstract class UBSedimentaryStoneSlab extends UBStoneSlab {
 
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-    return new ItemStack(getItemBlock(), SEDIMENTARY_VARIANTS[getMetaFromState(state) & 7].ordinal());
+    return new ItemStack(getItemBlock(), 1, SEDIMENTARY_VARIANTS[getMetaFromState(state) & 7].ordinal());
   }
 }

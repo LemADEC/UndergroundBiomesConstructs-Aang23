@@ -32,7 +32,7 @@ public class UBIgneousBrickSlabHalf extends UBIgneousBrickSlab {
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
       EntityPlayer player) {
     int meta = state.getBlock().getMetaFromState(state);
-    return new ItemStack(API.METAMORPHIC_STONE_SLAB.getItem(), 1, meta & 7);
+    return new ItemStack(API.IGNEOUS_BRICK_SLAB.getItem(), 1, meta & 7);
   }
 
   @Override

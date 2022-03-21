@@ -37,14 +37,14 @@ public class UBMetamorphicBrickSlabHalf extends UBMetamorphicBrickSlab {
 
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return API.IGNEOUS_BRICK_SLAB.getItem();
+    return API.METAMORPHIC_BRICK_SLAB.getItem();
   }
 
   @Override
   public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
       int fortune) {
     int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(API.IGNEOUS_BRICK_SLAB.getItem(), 1, meta & 7);
+    ItemStack itemStack = new ItemStack(API.METAMORPHIC_BRICK_SLAB.getItem(), 1, meta & 7);
     stacks.add(itemStack);
   }
 }
