@@ -169,6 +169,11 @@ public class MetamorphicGravel extends MetamorphicStone {
   }
 
   @Override
+  public float getBlockHardness(IBlockState state, World worldIn, BlockPos pos) {
+    return Blocks.GRAVEL.getBlockHardness(state, worldIn, pos);
+  }
+
+  @Override
   public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
     EnumPlantType plantType = plantable.getPlantType(world, pos.offset(direction));
     if (plantType == EnumPlantType.Desert || plantType == EnumPlantType.Beach || plantType == EnumPlantType.Water) {
