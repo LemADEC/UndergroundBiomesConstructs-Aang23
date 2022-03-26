@@ -4,6 +4,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 import com.google.common.base.Predicate;
+import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
@@ -26,6 +27,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+
+import static exterminatorjeff.undergroundbiomes.api.enums.SedimentaryVariant.LIGNITE;
+import static exterminatorjeff.undergroundbiomes.api.enums.SedimentaryVariant.SEDIMENTARY_VARIANT_PROPERTY;
 
 /**
  * @author CurtisA, LouisDB
@@ -146,7 +150,19 @@ public class SedimentaryGravel extends SedimentaryStone {
     if (fortune > 3) {
       fortune = 3;
     }
-    return rand.nextInt(10 - fortune * 3) == 0 ? Items.FLINT : itemBlock;
+    Item itemDrop;
+    if (state.getValue(SEDIMENTARY_VARIANT_PROPERTY) == LIGNITE) {
+      itemDrop = API.LIGNITE_COAL.getItem();
+    } else {
+      itemDrop = Items.FLINT;
+    }
+    return rand.nextInt(10 - fortune * 3) == 0 ? itemDrop : itemBlock;
+  }
+
+  // used by falling block to drop gravel while SedimentaryStone will drop lignite
+  @Override
+  public int damageDropped(IBlockState state) {
+    return getMetaFromState(state);
   }
 
   @Override
