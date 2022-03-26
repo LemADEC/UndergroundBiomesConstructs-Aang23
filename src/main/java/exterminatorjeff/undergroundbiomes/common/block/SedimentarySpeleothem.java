@@ -1,5 +1,7 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import net.minecraft.block.Block;
@@ -16,15 +18,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import mcp.MethodsReturnNonnullByDefault;
 import vazkii.arl.block.BlockMetaVariants.EnumBase;
 import static exterminatorjeff.undergroundbiomes.api.enums.SedimentaryVariant.*;
-import java.util.List;
-import java.util.ArrayList;
 import net.minecraft.util.NonNullList;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class SedimentarySpeleothem extends SedimentaryStone {
   public static final String internal_name = "sedimentary_speleothem";
   public static PropertyEnum<EnumSize> SIZE = PropertyEnum.create("size", EnumSize.class);
@@ -74,8 +78,7 @@ public class SedimentarySpeleothem extends SedimentaryStone {
   }
 
   @Override
-  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos,
-      Predicate<IBlockState> target) {
+  public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
     return false;
   }
 
@@ -85,8 +88,7 @@ public class SedimentarySpeleothem extends SedimentaryStone {
   }
 
   @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-      ItemStack stack) {
+  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     EnumSize size = EnumSize.values()[Math.max(0, getBearing(worldIn, pos) - 1)];
     worldIn.setBlockState(pos, state.withProperty(SIZE, size));
   }
@@ -107,14 +109,7 @@ public class SedimentarySpeleothem extends SedimentaryStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
   }
 
   @Override
@@ -141,11 +136,13 @@ public class SedimentarySpeleothem extends SedimentaryStone {
 
   private int getStrength(IBlockAccess world, BlockPos pos) {
     IBlockState state = world.getBlockState(pos);
-    if (state.getBlock().isFullBlock(state))
+    if (state.getBlock().isFullBlock(state)) {
       return 3;
+    }
 
-    if (state.getPropertyKeys().contains(SIZE))
+    if (state.getPropertyKeys().contains(SIZE)) {
       return state.getValue(SIZE).strength;
+    }
 
     return 0;
   }
@@ -176,8 +173,7 @@ public class SedimentarySpeleothem extends SedimentaryStone {
   }
 
   @Override
-  public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_,
-      EnumFacing p_193383_4_) {
+  public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
     return BlockFaceShape.UNDEFINED;
   }
 
@@ -186,11 +182,11 @@ public class SedimentarySpeleothem extends SedimentaryStone {
     return true;
   }
 
-  public static enum EnumSize implements EnumBase {
+  public enum EnumSize implements EnumBase {
 
     small(0, 2), medium(1, 4), big(2, 8);
 
-    private EnumSize(int strength, int width) {
+    EnumSize(int strength, int width) {
       this.strength = strength;
 
       float pad = ((float) ((16 - width) / 2) / 16F);

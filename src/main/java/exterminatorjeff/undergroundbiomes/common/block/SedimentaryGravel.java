@@ -1,9 +1,13 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -12,24 +16,22 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.NonNullList;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class SedimentaryGravel extends SedimentaryStone {
   public static final String internal_name = "sedimentary_gravel";
 
@@ -148,35 +150,17 @@ public class SedimentaryGravel extends SedimentaryStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     Item gravelBlock = this.getItemDropped(state, new Random(), fortune);
-    ItemStack itemStack = null;
+    ItemStack itemStack;
     if (gravelBlock == itemBlock) {
       int meta = state.getBlock().getMetaFromState(state);
       itemStack = new ItemStack(gravelBlock, 1, meta);
     } else {
       itemStack = new ItemStack(gravelBlock, 1);
     }
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
-    Item gravelBlock = this.getItemDropped(state, new Random(), fortune);
-    ItemStack itemStack = null;
-    if (gravelBlock == itemBlock) {
-      int meta = state.getBlock().getMetaFromState(state);
-      itemStack = new ItemStack(gravelBlock, 1, meta);
-    } else {
-      itemStack = new ItemStack(gravelBlock, 1);
-    }
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
+    stacks.add(itemStack);
+    DropsRegistry.INSTANCE.addDrops(stacks, this, world, pos, state, fortune);
   }
 
   @Override
@@ -190,12 +174,12 @@ public class SedimentaryGravel extends SedimentaryStone {
   }
 
   @Override
-  public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction,
-      IPlantable plantable) {
+  public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
     EnumPlantType plantType = plantable.getPlantType(world, pos.offset(direction));
     if (plantType == EnumPlantType.Desert || plantType == EnumPlantType.Beach || plantType == EnumPlantType.Water) {
       return true;
-    } else
+    } else {
       return false;
+    }
   }
 }

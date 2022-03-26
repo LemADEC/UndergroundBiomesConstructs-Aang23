@@ -1,12 +1,12 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
-import net.minecraft.block.Block;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,6 +17,8 @@ import net.minecraft.world.IBlockAccess;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class IgneousSandstoneChiseled extends IgneousStone {
   public static final String internal_name = "igneous_sandstone_chiseled";
 
@@ -41,17 +43,7 @@ public class IgneousSandstoneChiseled extends IgneousStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(itemBlock, 1, meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     int meta = state.getBlock().getMetaFromState(state);
     ItemStack itemStack = new ItemStack(itemBlock, 1, meta);
     stacks.add(itemStack);

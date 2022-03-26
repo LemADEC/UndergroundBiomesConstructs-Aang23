@@ -1,8 +1,11 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -19,8 +22,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,8 @@ import net.minecraft.item.ItemStack;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class SedimentarySand extends SedimentaryStone {
   public static final String internal_name = "sedimentary_sand";
 
@@ -153,8 +156,9 @@ public class SedimentarySand extends SedimentaryStone {
     EnumPlantType plantType = plantable.getPlantType(world, pos.offset(direction));
     if (plantType == EnumPlantType.Desert || plantType == EnumPlantType.Beach || plantType == EnumPlantType.Water) {
       return true;
-    } else
+    } else {
       return false;
+    }
   }
 
   @Override
@@ -163,17 +167,7 @@ public class SedimentarySand extends SedimentaryStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(itemBlock, 1, meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     int meta = state.getBlock().getMetaFromState(state);
     ItemStack itemStack = new ItemStack(itemBlock, 1, meta);
     stacks.add(itemStack);

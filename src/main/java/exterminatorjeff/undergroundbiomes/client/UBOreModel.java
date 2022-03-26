@@ -1,5 +1,7 @@
 package exterminatorjeff.undergroundbiomes.client;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import exterminatorjeff.undergroundbiomes.api.ModInfo;
@@ -16,6 +18,8 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import mcp.MethodsReturnNonnullByDefault;
 import org.apache.logging.log4j.Level;
 
 import java.util.Collection;
@@ -26,6 +30,8 @@ import java.util.Collection;
  *
  * @author LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 @SideOnly(Side.CLIENT)
 public class UBOreModel implements IModel {
 

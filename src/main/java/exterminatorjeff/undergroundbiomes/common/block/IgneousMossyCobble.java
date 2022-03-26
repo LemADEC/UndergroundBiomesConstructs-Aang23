@@ -1,5 +1,7 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import net.minecraft.block.Block;
@@ -17,10 +19,13 @@ import java.util.ArrayList;
 import net.minecraft.util.NonNullList;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class IgneousMossyCobble extends IgneousStone {
   public static final String internal_name = "igneous_cobble_mossy";
 
@@ -51,19 +56,7 @@ public class IgneousMossyCobble extends IgneousStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    Item mossyCobbleBlock = API.IGNEOUS_MOSSY_COBBLE.getItemBlock();
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(mossyCobbleBlock, 1, meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     Item mossyCobbleBlock = API.IGNEOUS_MOSSY_COBBLE.getItemBlock();
     int meta = state.getBlock().getMetaFromState(state);
     ItemStack itemStack = new ItemStack(mossyCobbleBlock, 1, meta);

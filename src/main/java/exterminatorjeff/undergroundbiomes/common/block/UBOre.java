@@ -25,8 +25,11 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import mcp.MethodsReturnNonnullByDefault;
 import tyra314.toolprogression.api.OverwrittenContent;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -42,6 +45,8 @@ import java.util.Random;
  * @author CurtisA, LouisDB
  * @see {@link UBOreIgneous}, {@link UBOreMetamorphic}, {@link UBOreSedimentary}
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public abstract class UBOre extends Block implements UBSubBlock {
 
   public static final int NO_METADATA = -1;
@@ -64,9 +69,10 @@ public abstract class UBOre extends Block implements UBSubBlock {
         int harvestLevel = OverwrittenContent.blocks.get(this.getTranslationKey()).level;
         setHarvestLevel(toolClass, harvestLevel);
       }
-    } else
+    } else {
       setHarvestLevel(baseOre.getHarvestTool(baseOre.getDefaultState()),
-          baseOre.getHarvestLevel(baseOre.getDefaultState()));
+                      baseOre.getHarvestLevel(baseOre.getDefaultState()));
+    }
     setCreativeTab(UBCreativeTab.UB_ORES_TAB);
     this.itemBlock = new UBItemOre(this);
     this.baseOre = baseOre;
@@ -120,19 +126,14 @@ public abstract class UBOre extends Block implements UBSubBlock {
 
   @Override
   public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-    for (int i = 0; i < getNbVariants(); ++i)
+    for (int i = 0; i < getNbVariants(); ++i) {
       list.add(new ItemStack(this, 1, i));
+    }
   }
 
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    Item item = Item.getItemFromBlock(baseOre);
-    Item drop = baseOre.getItemDropped(baseOreState, rand, fortune);
-    if (drop != item) {
-      return drop;
-    } else {
-      return drop;
-    }
+    return baseOre.getItemDropped(baseOreState, rand, fortune);
   }
 
   @Override
@@ -148,29 +149,28 @@ public abstract class UBOre extends Block implements UBSubBlock {
   @Nullable
   public String getHarvestTool(IBlockState state) {
     if (Loader.isModLoaded("toolprogression")) {
-      if (OverwrittenContent.blocks.containsKey(this.getTranslationKey())
-          && API.SETTINGS.customOreBlockHardnes().contains(this.getTranslationKey())) {
+      if ( OverwrittenContent.blocks.containsKey(this.getTranslationKey())
+        && API.SETTINGS.customOreBlockHardnes().contains(this.getTranslationKey())) {
         return OverwrittenContent.blocks.get(this.getTranslationKey()).toolclass;
-      } else
-        return baseOre.getHarvestTool(baseOreState);
-    } else
+      }
       return baseOre.getHarvestTool(baseOreState);
+    }
+    return baseOre.getHarvestTool(baseOreState);
   }
 
   public int getHarvestLevel(IBlockState state) {
     if (Loader.isModLoaded("toolprogression")) {
-      if (OverwrittenContent.blocks.containsKey(this.getTranslationKey())
-          && API.SETTINGS.customOreBlockHardnes().contains(this.getTranslationKey())) {
+      if ( OverwrittenContent.blocks.containsKey(this.getTranslationKey())
+        && API.SETTINGS.customOreBlockHardnes().contains(this.getTranslationKey())) {
         return OverwrittenContent.blocks.get(this.getTranslationKey()).level;
-      } else
-        return baseOre.getHarvestLevel(baseOreState);
-    } else
+      }
       return baseOre.getHarvestLevel(baseOreState);
+    }
+    return baseOre.getHarvestLevel(baseOreState);
   }
 
   @Override
-  public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player,
-      boolean willHarvest) {
+  public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
     return baseOre.removedByPlayer(baseOreState, world, pos, player, willHarvest);
   }
 
@@ -240,8 +240,7 @@ public abstract class UBOre extends Block implements UBSubBlock {
   }
 
   @Override
-  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
-      EntityPlayer player) {
+  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     return new ItemStack(itemBlock, 1, getMetaFromState(world.getBlockState(pos)));
   }
 
@@ -249,6 +248,7 @@ public abstract class UBOre extends Block implements UBSubBlock {
   public void addInformation(ItemStack stack, @Nullable World world, List<String> infos, ITooltipFlag tooltipFlag) {
     if (API.SETTINGS.displayTooltipModName()) {
       Map<String, ModContainer> indexedModList = Loader.instance().getIndexedModList();
+      assert baseOre.getRegistryName() != null;
       String modName = indexedModList.get(baseOre.getRegistryName().getNamespace()).getName();
       infos.add(API.SETTINGS.getTooltipModNamePreTextFormatting() + API.SETTINGS.getTooltipModNamePreText() + "\u00A7r "
           + API.SETTINGS.getTooltipModNameFormatting() + modName + "\u00A7r "

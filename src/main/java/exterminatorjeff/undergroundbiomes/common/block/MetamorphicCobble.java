@@ -1,8 +1,11 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +16,8 @@ import net.minecraft.world.IBlockAccess;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class MetamorphicCobble extends MetamorphicStone {
   public static final String internal_name = "metamorphic_cobble";
 

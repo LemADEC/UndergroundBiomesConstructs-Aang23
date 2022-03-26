@@ -1,11 +1,14 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -14,8 +17,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,8 @@ import net.minecraft.item.ItemStack;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class SedimentaryMossyCobble extends SedimentaryStone {
   public static final String internal_name = "sedimentary_stone_mossy";
 
@@ -48,22 +51,10 @@ public class SedimentaryMossyCobble extends SedimentaryStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     Item mossyCobbleBlock = API.SEDIMENTARY_MOSSY_COBBLE.getItemBlock();
     int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(mossyCobbleBlock , 1, meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    Item mossyCobbleBlock  = API.SEDIMENTARY_MOSSY_COBBLE.getItemBlock();
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(mossyCobbleBlock , 1, meta);
-    stacks.add(itemStack);
+    stacks.add(new ItemStack(mossyCobbleBlock , 1, meta));
     DropsRegistry.INSTANCE.addDrops(stacks, this, world, pos, state, fortune);
   }
 

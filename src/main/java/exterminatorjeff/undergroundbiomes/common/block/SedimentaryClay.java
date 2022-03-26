@@ -1,9 +1,12 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -15,13 +18,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.util.NonNullList;
 
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.item.ItemStack;
 
 /**
  * @author Aang23
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class SedimentaryClay extends SedimentaryStone {
   public static final String internal_name = "sedimentary_clay";
 
@@ -52,19 +55,8 @@ public class SedimentaryClay extends SedimentaryStone {
   }
 
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    ItemStack itemStack = new ItemStack(Items.CLAY_BALL, 4);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
-    return result;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
-    ItemStack itemStack = new ItemStack(Items.CLAY_BALL, 4);
-    stacks.add(itemStack);
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    stacks.add(new ItemStack(Items.CLAY_BALL, 4));
     DropsRegistry.INSTANCE.addDrops(stacks, this, world, pos, state, fortune);
   }
 

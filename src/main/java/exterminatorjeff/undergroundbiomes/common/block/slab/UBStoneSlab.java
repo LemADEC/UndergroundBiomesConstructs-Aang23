@@ -1,5 +1,6 @@
 package exterminatorjeff.undergroundbiomes.common.block.slab;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import exterminatorjeff.undergroundbiomes.client.UBCreativeTab;
@@ -27,7 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -59,19 +59,14 @@ public abstract class UBStoneSlab extends BlockSlab implements UBSubBlock {
     return this;
   }
 
-
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    NonNullList<ItemStack> ret = NonNullList.create();
-    getDrops(ret, world, pos, state, fortune);
-    return ret;
+  public int quantityDropped(Random random) {
+    return isDouble() ? 2 : 1;
   }
 
   @Override
   public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    int numberDropped = isDouble() ? 2 : 1;
-    ItemStack dropped = new ItemStack(itemBlock, numberDropped, damageDropped(state));
-    drops.add(dropped);
+    drops.add(new ItemStack(itemBlock, quantityDropped(new Random()), damageDropped(state)));
   }
 
   @Override
@@ -144,7 +139,7 @@ public abstract class UBStoneSlab extends BlockSlab implements UBSubBlock {
   }
 
   @Override
-  public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
+  public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
     return baseStone().getExplosionResistance(world, pos, exploder, explosion);
   }
 }

@@ -6,13 +6,13 @@ import exterminatorjeff.undergroundbiomes.common.block.UBOre;
 import java.util.ArrayList;
 
 public class UBOreConfig implements IUBOreConfig {
-  private String internalOreName;
-  private int meta = UBOre.NO_METADATA;
-  private String overlay;
-  private String color;
-  private Integer lightValue = -1;
-  private boolean alphaOverlay = false;
-  private ArrayList<String> oreDirectories;
+  private final String internalOreName;
+  private final int meta;
+  private final String overlay;
+  private final String color;
+  private final Integer lightValue;
+  private final boolean alphaOverlay;
+  private final ArrayList<String> oreDirectories;
 
   public UBOreConfig(String internalOreName, int meta, String overlay, ArrayList<String> oreDirectories, String color) {
     this.internalOreName = internalOreName;
@@ -20,6 +20,8 @@ public class UBOreConfig implements IUBOreConfig {
     this.overlay = overlay;
     this.oreDirectories = oreDirectories;
     this.color = color;
+    this.lightValue = -1;
+    this.alphaOverlay = false;
   }
 
   public UBOreConfig(String internalOreName, int meta, String overlay, ArrayList<String> oreDirectories) {
@@ -27,19 +29,19 @@ public class UBOreConfig implements IUBOreConfig {
   }
 
   public UBOreConfig(String internalOreName, int meta, String overlay) {
-    this(internalOreName, meta, overlay, new ArrayList<String>());
+    this(internalOreName, meta, overlay, new ArrayList<>());
   }
 
   public UBOreConfig(String internalOreName, int meta, String overlay, String color) {
-    this(internalOreName, meta, overlay, new ArrayList<String>(), color);
+    this(internalOreName, meta, overlay, new ArrayList<>(), color);
   }
 
   public UBOreConfig(String ore_name, String overlay) {
-    this(ore_name, UBOre.NO_METADATA, overlay, new ArrayList<String>());
+    this(ore_name, UBOre.NO_METADATA, overlay, new ArrayList<>());
   }
 
   public UBOreConfig(String ore_name, String overlay, String color) {
-    this(ore_name, UBOre.NO_METADATA, overlay, new ArrayList<String>(), color);
+    this(ore_name, UBOre.NO_METADATA, overlay, new ArrayList<>(), color);
   }
 
   public UBOreConfig(String ore_name, String overlay, ArrayList<String> oreDirectories) {

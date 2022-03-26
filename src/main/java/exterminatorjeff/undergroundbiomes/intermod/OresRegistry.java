@@ -11,7 +11,6 @@ import exterminatorjeff.undergroundbiomes.config.UBConfig;
 import exterminatorjeff.undergroundbiomes.core.UndergroundBiomes;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -30,7 +29,6 @@ import org.apache.logging.log4j.Level;
 
 import java.util.*;
 
-
 /**
  * @author LouisDB
  * @see UBOre
@@ -45,11 +43,11 @@ public enum OresRegistry implements UBOresRegistry {
   private static final UBLogger LOGGER = new UBLogger(OresRegistry.class, Level.INFO);
 
   @SuppressWarnings("unused")
-  private final String SETUP_ERROR_MSG = "Cannot setup UBOres for '%s', " + ModInfo.NAME + "'s block registering has not started yet!";
+  private static final String SETUP_ERROR_MSG = "Cannot setup UBOres for '%s', " + ModInfo.NAME + "'s block registering has not started yet!";
   @SuppressWarnings("unused")
-  private final String SETUP_INFO_MSG = "The ore '%s' has been successfully UBfied.";
-  private final String REQUEST_ERROR_MSG = "Cannot request UBOres setup for '%s', " + ModInfo.NAME + "'s block registering is done!";
-  private final String REQUEST_INFO_MSG = "Request for '%s' to be UBfied added.";
+  private static final String SETUP_INFO_MSG = "The ore '%s' has been successfully UBfied.";
+  private static final String REQUEST_ERROR_MSG = "Cannot request UBOres setup for '%s', " + ModInfo.NAME + "'s block registering is done!";
+  private static final String REQUEST_INFO_MSG = "Request for '%s' to be UBfied added.";
 
   @SuppressWarnings("unused")
   private String format(String message, Block baseOre) {
@@ -78,24 +76,23 @@ public enum OresRegistry implements UBOresRegistry {
   /**
    * Check if the given ore has been UBified.
    *
-   * @param baseStone
-   * @param baseOreState
+   * @param baseStone     Base stone block
+   * @param baseOreState  Bare ore blockstate
    */
   public boolean isUBified(Block baseStone, IBlockState baseOreState) {
-    if (UBConfig.SPECIFIC.ubifyOres() == false) return false;
+    if (!UBConfig.SPECIFIC.ubifyOres()) return false;
     Block baseOre = baseOreState.getBlock();
     int baseOreMeta = baseOre.getMetaFromState(baseOreState);
-    boolean result = ubifiedOres.containsKey(toKey(baseOre, baseOreMeta, baseStone));
-    return result;
+    return ubifiedOres.containsKey(toKey(baseOre, baseOreMeta, baseStone));
   }
 
   /**
    * Get the UBified version of an ore.<br>
    * Must be called after checking {@link #isUBified(Block, IBlockState)}.
    *
-   * @param baseStone
-   * @param baseStoneMeta
-   * @param baseOreState
+   * @param baseStone     Base stone block
+   * @param baseStoneMeta Base stone metadata
+   * @param baseOreState  Bare ore blockstate
    */
   public IBlockState getUBifiedOre(UBStone baseStone, int baseStoneMeta, IBlockState baseOreState) {
     Block baseOre = baseOreState.getBlock();
@@ -108,7 +105,8 @@ public enum OresRegistry implements UBOresRegistry {
    */
   private void applyBaseOreSmelting(Block baseOre, int meta, OreEntry... ores) {
     ItemStack result = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(baseOre, 1, meta));
-    if (result != null && result.getItem() != (new ItemStack(Blocks.AIR)).getItem()) {
+    if ( result != null
+      && !result.isEmpty() ) {
       for (OreEntry ore : ores)
         for (int i = 0; i < ore.ore().getNbVariants(); ++i)
           GameRegistry.addSmelting(new ItemStack(ore.getBlock(), 1, i), result, FurnaceRecipes.instance().getSmeltingExperience(result));
@@ -158,7 +156,7 @@ public enum OresRegistry implements UBOresRegistry {
     }
   }
 
-  private class UBifyRequest {
+  private static class UBifyRequest {
     protected final Block baseOre;
     protected final int baseOreMeta;
     protected OreEntry igneousOreEntry;
@@ -211,22 +209,18 @@ public enum OresRegistry implements UBOresRegistry {
   private final Map<String, ResourceLocation> oresToOverlays = new HashMap<>();
 
   private String toKey(Block baseOre, int baseOreMeta) {
-    if (baseOreMeta == UBOre.NO_METADATA)
+    if (baseOreMeta == UBOre.NO_METADATA) {
       baseOreMeta = 0;
+    }
     return baseOre.getRegistryName() + "." + baseOreMeta;
   }
 
   private ResourceLocation getOverlayFor(String key) {
     ResourceLocation location = oresToOverlays.get(key);
-    if (location == null)
+    if (location == null) {
       LOGGER.error("There is no registered overlay for '" + key + "'!");
-    //else
-      //LOGGER.debug("Found overlay for '" + key + "': " + location);
+    }
     return location;
-  }
-
-  public ResourceLocation getOverlayFor(Block baseOre) {
-    return getOverlayFor(toKey(baseOre, UBOre.NO_METADATA));
   }
 
   public ResourceLocation getOverlayFor(Block baseOre, int baseOreMeta) {
@@ -236,9 +230,9 @@ public enum OresRegistry implements UBOresRegistry {
   private void registerOreOverlay(String key, ResourceLocation overlayLocation) {
     if (!oresToOverlays.containsKey(key)) {
       oresToOverlays.put(key, overlayLocation);
-      //LOGGER.debug("Overlay for '" + key + "' registered.");
-    } else
+    } else {
       LOGGER.warn("An overlay for '" + key + "' has already been registered!");
+    }
   }
 
   @Override
@@ -269,24 +263,23 @@ public enum OresRegistry implements UBOresRegistry {
     Block block = oreEntry.getBlock();
     Block baseOre = oreEntry.ore().baseOre;
     int baseOreMeta = oreEntry.ore().baseOreMeta;
-    ItemStack baseOreStack = null;
+    ItemStack baseOreStack;
     if (baseOreMeta == UBOre.NO_METADATA) {
       baseOreStack = new ItemStack(baseOre, 1);
     } else {
       baseOreStack = new ItemStack(baseOre, 1, baseOreMeta);
     }
-    int[] registrationIDs = OreDictionary.getOreIDs(baseOreStack);
-    for (int i = 0; i < registrationIDs.length; i++) {
-      String registrationName = OreDictionary.getOreName(registrationIDs[i]);
+    for (int registrationID : OreDictionary.getOreIDs(baseOreStack)) {
+      String registrationName = OreDictionary.getOreName(registrationID);
       //LOGGER.info(baseOre.getLocalizedName() + " " + registrationName + " " + block.getLocalizedName());
-      registerOreDirctionary(registrationName, block);
+      registerOreDictionary(registrationName, block);
     }
     for(String oreDictionary : oreEntry.ore().config.getOreDirectories()){
-      registerOreDirctionary(oreDictionary, block);
-    };
+      registerOreDictionary(oreDictionary, block);
+    }
   }
 
-  private void registerOreDirctionary(String oreDictName, Block block) {
+  private void registerOreDictionary(String oreDictName, Block block) {
     for (int j = 0; j < 8; j++) {
       ItemStack stack = new ItemStack(block, 1, j);
       OreDictionary.registerOre(oreDictName, stack);
@@ -304,7 +297,7 @@ public enum OresRegistry implements UBOresRegistry {
 
   private final HashMap<Integer, HashMap<ChunkPos, ArrayList<BlockPos>>> storedLocations = new HashMap<>();
 
-  private final ArrayList<BlockPos> blockPosList(IBlockAccess world, ChunkPos chunkID) {
+  private ArrayList<BlockPos> blockPosList(IBlockAccess world, ChunkPos chunkID) {
     int dimension = dimension(world);
     HashMap<ChunkPos, ArrayList<BlockPos>> worldMap = storedLocations.get(dimension);
     if (worldMap == null) {

@@ -1,11 +1,16 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneType;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -18,14 +23,14 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.entity.monster.EntitySilverfish;
-import java.util.ArrayList;
-import java.util.List;
 
 import static exterminatorjeff.undergroundbiomes.api.enums.MetamorphicVariant.*;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class MetamorphicMonsterStone extends UBStone {
   public static final String internal_name = "metamorphic_monster_stone";
 
@@ -96,19 +101,8 @@ public class MetamorphicMonsterStone extends UBStone {
   }
 
   @Override
-  public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
+  public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
     return getBaseResistance() * world.getBlockState(pos).getValue(METAMORPHIC_VARIANT_PROPERTY).getResistance();
-  }
-
-  @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    Item cobbleBlock = API.METAMORPHIC_COBBLE.getItemBlock();
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(cobbleBlock, 1, meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
-    return result;
   }
 
   @Override

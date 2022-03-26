@@ -1,10 +1,15 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneType;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -22,6 +27,8 @@ import static exterminatorjeff.undergroundbiomes.api.enums.SedimentaryVariant.*;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class SedimentaryMonsterStone extends UBStone {
   public static final String internal_name = "sedimentary_monster_stone";
 
@@ -108,7 +115,7 @@ public class SedimentaryMonsterStone extends UBStone {
   }
 
   @Override
-  public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
+  public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
     return getBaseResistance() * world.getBlockState(pos).getValue(SEDIMENTARY_VARIANT_PROPERTY).getResistance();
   }
 

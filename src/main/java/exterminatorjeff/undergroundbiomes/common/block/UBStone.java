@@ -1,5 +1,8 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.ModInfo;
 import exterminatorjeff.undergroundbiomes.api.common.UBBlock;
@@ -7,6 +10,7 @@ import exterminatorjeff.undergroundbiomes.client.UBCreativeTab;
 import exterminatorjeff.undergroundbiomes.config.UBConfig;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,12 +31,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
 import java.util.Random;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public abstract class UBStone extends Block implements UBBlock {
 
   private static final float BASE_HARDNESS = 2.25F;
@@ -83,7 +88,7 @@ public abstract class UBStone extends Block implements UBBlock {
 
   public abstract float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos);
 
-  public abstract float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion);
+  public abstract float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion);
 
   @Override
   public int quantityDropped(IBlockState state, int fortune, Random random) {
@@ -91,7 +96,7 @@ public abstract class UBStone extends Block implements UBBlock {
     if ((fortune != 0) && (((UBStone) state.getBlock()).isFortuneAffected(state))) {
       // Fortune III gives up to 4 items
       int j = random.nextInt(fortune + 2);
-      quantity = (j < 1) ? 1 : j;
+      quantity = Math.max(j, 1);
     }
     return quantity;
   }
@@ -119,26 +124,14 @@ public abstract class UBStone extends Block implements UBBlock {
     return getMetaFromState(state);
   }
 
-  @SuppressWarnings("deprecation")
   @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    List<ItemStack> drops = super.getDrops(world, pos, state, fortune);
-    DropsRegistry.INSTANCE.addDrops(drops, this, world, pos, state, fortune);
-    return drops;
-  }
-
-  @Override
-  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state,
-      int fortune) {
-    NonNullList<ItemStack> drops = NonNullList.create();
-    super.getDrops(drops, world, pos, state, fortune);
-    DropsRegistry.INSTANCE.addDrops(drops, this, world, pos, state, fortune);
+  public void getDrops(NonNullList<ItemStack> stacks, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    DropsRegistry.INSTANCE.addDrops(stacks, this, world, pos, state, fortune);
     super.getDrops(stacks, world, pos, state, fortune);
   }
 
   @Override
-  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
-      EntityPlayer player) {
+  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     Block targetBlock = state.getBlock();
     if (targetBlock instanceof UBStone) {
       return new ItemStack(this.itemBlock, 1, getMetaFromState(state));

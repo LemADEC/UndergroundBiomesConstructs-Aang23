@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Level;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,7 +30,7 @@ public class ModOreRegistrar implements UBModOreRegistrar {
 
   private static final UBLogger LOGGER = new UBLogger(OresRegistry.class, Level.INFO);
   private final File directory;
-  private HashMap<String, UBOreConfig> ores = new HashMap<>();
+  private final HashMap<String, UBOreConfig> ores = new HashMap<>();
   private final Type jsonType = new TypeToken<ArrayList<UBOreConfig>>() {
   }.getType();
 
@@ -63,59 +63,58 @@ public class ModOreRegistrar implements UBModOreRegistrar {
   }
 
   private void createDefaults() {
-    writeDefaults(getMinecraftOres(), "minecraft.json");
-    writeDefaults(getNuclearcraftOres(), "nuclearcraft.json");
-    writeDefaults(getGrowthcraftOres(), "growthcraft.json");
-    writeDefaults(getActuallyAdditionsOres(), "actuallyadditions.json");
-    writeDefaults(getAppliedEnergisticsOres(), "appliedenergistics2.json");
-    writeDefaults(getBaseMetalsOres(), "basemetals.json");
-    writeDefaults(getBaseMineralsOres(), "baseminerals.json");
-    writeDefaults(getBiomesOPlentyOres(), "biomesoplenty.json");
-    writeDefaults(getBetterUndergroundOres(), "betterunderground.json");
-    writeDefaults(getDraconicEvolutionOres(), "draconicevolution.json");
-    writeDefaults(getEnderOreOres(), "enderore.json");
-    writeDefaults(getExtremeReactorsOres(), "extremereactors.json");
-    writeDefaults(getForestyOres(), "forestry.json");
-    writeDefaults(getImmersiveEngineeringOres(), "immersiveengineering.json");
-    writeDefaults(getIndustrialCraftOres(), "industrialcraft.json");
-    writeDefaults(getMekanismOres(), "mekanism.json");
-    writeDefaults(getModernMetalsOres(), "modernmetals.json");
-    writeDefaults(getRFToolsOres(), "rftools.json");
-    writeDefaults(getTechRebornOres(), "techreborn.json");
-    writeDefaults(getThermalFoundationOres(), "thermalfoundation.json");
-    writeDefaults(getThaumcraftOres(), "thaumcraft.json");
-    writeDefaults(getGeolosysOres(), "geolosys.json");
-    writeDefaults(getMysticalAgricultureOres(), "mysticalagriculture.json");
-    writeDefaults(getMatterOverdriveLegacyOres(), "matteroverdrivelegacy.json");
-    writeDefaults(getTaigaOres(), "taiga.json");
-    writeDefaults(getMetallurgy4Ores(), "metallurgy4.json");
-    writeDefaults(getProjectRedOres(), "projectred.json");
-    writeDefaults(getPoorMetalsOres(), "poormetals.json");
-    writeDefaults(getDenseMetalsOres(), "densemetals.json");
-    writeDefaults(getAstralSorceryOres(), "astralsorcery.json");
-    writeDefaults(getMysticalWorldOres(), "mysticalworld.json");
-    writeDefaults(getBiomeYoullGoOres(), "byg.json");
-    writeDefaults(getCandyWorldOres(), "candyworld.json");
-    writeDefaults(getCurioOres(), "curio.json");
-    writeDefaults(getBluePowerOres(), "bluepower.json");
-    writeDefaults(getWildnatureOres(), "wildnature.json");
-    writeDefaults(getIndustrialCraftClassicOres(), "ic2classic.json");
-    writeDefaults(getGrimpackOres(), "grimpack.json");
-    writeDefaults(getTreasure2Ores(), "treasure2.json");
-    writeDefaults(getWorldsRetoldOres(), "worldsretold.json");
-    writeDefaults(getScalingHealthOres(), "scalinghealth.json");
-    writeDefaults(getPyrotechOres(), "pyrotech.json");
-    writeDefaults(getMubbleOres(), "mubble.json");
-    writeDefaults(getMoGlowstoneOres(), "moglowstone.json");
-    writeDefaults(getFloricraftOres(), "floricraft.json");
-    writeDefaults(getDartcraftOres(), "dartcraftreloaded.json");
-    writeDefaults(getCustomIdeasOres(), "customideas.json");
-    writeDefaults(getStarWarsOres(), "starwars.json");
-    writeDefaults(getCommunityModOres(), "communitymod.json");
-    writeDefaults(getAoa3Ores(), "aoa3.json");
-    writeDefaults(getAromasDimensionalOres(), "aromasdimensionalworld.json");
-    writeDefaults(getRailcraftOres(), "railcraft.json");
-
+    writeDefaults(getMinecraftOres()               , "minecraft.json");
+    writeDefaults(getActuallyAdditionsOres()       , "actuallyadditions.json");
+    writeDefaults(getAoa3Ores()                    , "aoa3.json");
+    writeDefaults(getAppliedEnergisticsOres()      , "appliedenergistics2.json");
+    writeDefaults(getAromasDimensionalOres()       , "aromasdimensionalworld.json");
+    writeDefaults(getAstralSorceryOres()           , "astralsorcery.json");
+    writeDefaults(getBaseMetalsOres()              , "basemetals.json");
+    writeDefaults(getBaseMineralsOres()            , "baseminerals.json");
+    writeDefaults(getBetterUndergroundOres()       , "betterunderground.json");
+    writeDefaults(getBiomesOPlentyOres()           , "biomesoplenty.json");
+    writeDefaults(getBiomeYoullGoOres()            , "byg.json");
+    writeDefaults(getBluePowerOres()               , "bluepower.json");
+    writeDefaults(getCandyWorldOres()              , "candyworld.json");
+    writeDefaults(getCommunityModOres()            , "communitymod.json");
+    writeDefaults(getCurioOres()                   , "curio.json");
+    writeDefaults(getCustomIdeasOres()             , "customideas.json");
+    writeDefaults(getDartcraftOres()               , "dartcraftreloaded.json");
+    writeDefaults(getDenseMetalsOres()             , "densemetals.json");
+    writeDefaults(getDraconicEvolutionOres()       , "draconicevolution.json");
+    writeDefaults(getEnderOreOres()                , "enderore.json");
+    writeDefaults(getExtremeReactorsOres()         , "extremereactors.json");
+    writeDefaults(getFloricraftOres()              , "floricraft.json");
+    writeDefaults(getForestyOres()                 , "forestry.json");
+    writeDefaults(getGeolosysOres()                , "geolosys.json");
+    writeDefaults(getGrimpackOres()                , "grimpack.json");
+    writeDefaults(getGrowthcraftOres()             , "growthcraft.json");
+    writeDefaults(getImmersiveEngineeringOres()    , "immersiveengineering.json");
+    writeDefaults(getIndustrialCraftClassicOres()  , "ic2classic.json");
+    writeDefaults(getIndustrialCraftOres()         , "industrialcraft.json");
+    writeDefaults(getMatterOverdriveLegacyOres()   , "matteroverdrivelegacy.json");
+    writeDefaults(getMekanismOres()                , "mekanism.json");
+    writeDefaults(getMetallurgy4Ores()             , "metallurgy4.json");
+    writeDefaults(getModernMetalsOres()            , "modernmetals.json");
+    writeDefaults(getMoGlowstoneOres()             , "moglowstone.json");
+    writeDefaults(getMubbleOres()                  , "mubble.json");
+    writeDefaults(getMysticalAgricultureOres()     , "mysticalagriculture.json");
+    writeDefaults(getMysticalWorldOres()           , "mysticalworld.json");
+    writeDefaults(getNuclearcraftOres()            , "nuclearcraft.json");
+    writeDefaults(getPoorMetalsOres()              , "poormetals.json");
+    writeDefaults(getProjectRedOres()              , "projectred.json");
+    writeDefaults(getPyrotechOres()                , "pyrotech.json");
+    writeDefaults(getRailcraftOres()               , "railcraft.json");
+    writeDefaults(getRFToolsOres()                 , "rftools.json");
+    writeDefaults(getScalingHealthOres()           , "scalinghealth.json");
+    writeDefaults(getStarWarsOres()                , "starwars.json");
+    writeDefaults(getTaigaOres()                   , "taiga.json");
+    writeDefaults(getTechRebornOres()              , "techreborn.json");
+    writeDefaults(getThaumcraftOres()              , "thaumcraft.json");
+    writeDefaults(getThermalFoundationOres()       , "thermalfoundation.json");
+    writeDefaults(getTreasure2Ores()               , "treasure2.json");
+    writeDefaults(getWildnatureOres()              , "wildnature.json");
+    writeDefaults(getWorldsRetoldOres()            , "worldsretold.json");
   }
 
   private void writeDefaults(ArrayList<UBOreConfig> ores, String filename) {
@@ -126,12 +125,8 @@ public class ModOreRegistrar implements UBModOreRegistrar {
           .setPrettyPrinting()
           .create();
         String json = gson.toJson(ores, jsonType);
-        Files.write(filepath, Arrays.asList(json.split("\n")), Charset.forName("UTF-8"));
+        Files.write(filepath, Arrays.asList(json.split("\n")), StandardCharsets.UTF_8);
       }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -148,18 +143,15 @@ public class ModOreRegistrar implements UBModOreRegistrar {
   private void readFile(File file) {
     try {
       Gson gson = new Gson();
-      String json = null;
-      json = FileUtils.readFileToString(file, "UTF8");
+      String json = FileUtils.readFileToString(file, "UTF8");
       ArrayList<UBOreConfig> ores = gson.fromJson(json, jsonType);
       if (ores != null) {
-        for(int i = 0; i < ores.size(); i++) {
-          UBOreConfig ore = ores.get(i);
-          if(this.ores.containsKey(ore.toKey())) {
+        for (UBOreConfig ore : ores) {
+          if (this.ores.containsKey(ore.toKey())) {
             String message = "Ore " + ore.toKey() + " has already been defined elsewhere!\nFound while checking: " + file.getAbsolutePath();
-            if(API.SETTINGS.crashOnProblems()) {
+            if (API.SETTINGS.crashOnProblems()) {
               LOGGER.fatal(message);
-            }
-            else {
+            } else {
               LOGGER.warn(message);
             }
           }
@@ -185,89 +177,10 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getAstralSorceryOres() {
+  private ArrayList<UBOreConfig> getActuallyAdditionsOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("astralsorcery:blockcustomsandore", 1, ModInfo.MODID + ":blocks/overlays/astralsorcery/aquamarine"));
-    ores.add(new UBOreConfig("astralsorcery:blockcustomore", 0, ModInfo.MODID + ":blocks/overlays/astralsorcery/rockcrystal"));
-    ores.add(new UBOreConfig("astralsorcery:blockcustomore", 1, ModInfo.MODID + ":blocks/overlays/astralsorcery/starmetal"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getBiomeYoullGoOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("byg:fossilstone", ModInfo.MODID + ":blocks/overlays/byg/fossil_stone"));
-    ores.add(new UBOreConfig("byg:lathariumore", ModInfo.MODID + ":blocks/overlays/byg/latharium_ore"));
-    ores.add(new UBOreConfig("byg:pendoriteore", ModInfo.MODID + ":blocks/overlays/byg/pendorite_ore"));
-    ores.add(new UBOreConfig("byg:tamreliteore", ModInfo.MODID + ":blocks/overlays/byg/tamrelite_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getPyrotechOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("pyrotech:fossil_ore", ModInfo.MODID + ":blocks/overlays/pyrotech/fossil_ore"));
-    ores.add(new UBOreConfig("pyrotech:dense_coal_ore", ModInfo.MODID + ":blocks/overlays/byg/dense_coal_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getMubbleOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("mubble:vanadium_ore", ModInfo.MODID + ":blocks/overlays/mubble/vanadium_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getCommunityModOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("community_mod:squirrel_ore", ModInfo.MODID + ":blocks/overlays/community_mod/squirrel_ore"));
-    ores.add(new UBOreConfig("community_mod:poke_ore", ModInfo.MODID + ":blocks/overlays/community_mod/poke_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getAromasDimensionalOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("aroma1997sdimension:miningore", 0, ModInfo.MODID + ":blocks/overlays/aroma1997sdimension/stickyore"));
-    ores.add(new UBOreConfig("aroma1997sdimension:miningore", 1, ModInfo.MODID + ":blocks/overlays/aroma1997sdimension/clayore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getDartcraftOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("dartcraftreloaded:orepower", ModInfo.MODID + ":blocks/overlays/dartcraftreloaded/orepower"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getStarWarsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("starwars:ore_crystal", ModInfo.MODID + ":blocks/overlays/starwars/ore_crystal"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getFloricraftOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("floricraft:ore_salt", ModInfo.MODID + ":blocks/overlays/floricraft/ore_salt"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getCustomIdeasOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("custom:silversteel_ore", ModInfo.MODID + ":blocks/overlays/customideas/silversteel_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getMoGlowstoneOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("moglowstone:glowstone_ore", ModInfo.MODID + ":blocks/overlays/moglowstone/glowstone_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getWorldsRetoldOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("worldsretold:cryonite_ore", ModInfo.MODID + ":blocks/overlays/worldsretold/cryonite_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getScalingHealthOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("scalinghealth:crystalore", ModInfo.MODID + ":blocks/overlays/scalinghealth/crystalore"));
+    String oreName = "actuallyadditions:block_misc";
+    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/custom/black_quarz"));
     return ores;
   }
 
@@ -282,30 +195,80 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getTreasure2Ores() {
+  private ArrayList<UBOreConfig> getAppliedEnergisticsOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("tresure2:ruby_ore", ModInfo.MODID + ":blocks/overlays/tresure2/ruby_nugget"));
-    ores.add(new UBOreConfig("tresure2:sapphire_ore", ModInfo.MODID + ":blocks/overlays/tresure2/sapphire_nugget"));
+    ores.add(new UBOreConfig("appliedenergistics2:quartz_ore", "appliedenergistics2:blocks/charged_quartz_ore_light"));
+    ores.add(new UBOreConfig("appliedenergistics2:charged_quartz_ore", "appliedenergistics2:blocks/charged_quartz_ore_light"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getGrimpackOres() {
+  private ArrayList<UBOreConfig> getAromasDimensionalOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("grimpack:aluminum_ore", ModInfo.MODID + ":blocks/overlays/grimpack/aluminum_ore"));
-    ores.add(new UBOreConfig("grimpack:oil_ore", ModInfo.MODID + ":blocks/overlays/grimpack/oil_ore"));
-    ores.add(new UBOreConfig("grimpack:black_diamond_ore", ModInfo.MODID + ":blocks/overlays/grimpack/black_diamond_ore"));
-    ores.add(new UBOreConfig("grimpack:element_115_ore", ModInfo.MODID + ":blocks/overlays/grimpack/element_115_ore"));
-    ores.add(new UBOreConfig("grimpack:randomite", ModInfo.MODID + ":blocks/overlays/grimpack/randomite"));
+    ores.add(new UBOreConfig("aroma1997sdimension:miningore", 0, ModInfo.MODID + ":blocks/overlays/aroma1997sdimension/stickyore"));
+    ores.add(new UBOreConfig("aroma1997sdimension:miningore", 1, ModInfo.MODID + ":blocks/overlays/aroma1997sdimension/clayore"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getWildnatureOres() {
+  private ArrayList<UBOreConfig> getAstralSorceryOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("wildnature:amethyst_ore", ModInfo.MODID + ":blocks/overlays/wildnature/amethyst_ore"));
-    ores.add(new UBOreConfig("wildnature:malachite_ore", ModInfo.MODID + ":blocks/overlays/wildnature/malachite_ore"));
-    ores.add(new UBOreConfig("wildnature:ruby_ore", ModInfo.MODID + ":blocks/overlays/wildnature/ruby_ore"));
-    ores.add(new UBOreConfig("wildnature:sapphire_ore", ModInfo.MODID + ":blocks/overlays/wildnature/sapphire_ore"));
-    ores.add(new UBOreConfig("wildnature:silver_ore", ModInfo.MODID + ":blocks/overlays/wildnature/silver_ore"));
+    ores.add(new UBOreConfig("astralsorcery:blockcustomsandore", 1, ModInfo.MODID + ":blocks/overlays/astralsorcery/aquamarine"));
+    ores.add(new UBOreConfig("astralsorcery:blockcustomore", 0, ModInfo.MODID + ":blocks/overlays/astralsorcery/rockcrystal"));
+    ores.add(new UBOreConfig("astralsorcery:blockcustomore", 1, ModInfo.MODID + ":blocks/overlays/astralsorcery/starmetal"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getBaseMetalsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("basemetals:antimony_ore", ModInfo.MODID + ":blocks/overlays/basemetals/antimony"));
+    ores.add(new UBOreConfig("basemetals:bismuth_ore", ModInfo.MODID + ":blocks/overlays/basemetals/bismuth"));
+    ores.add(new UBOreConfig("basemetals:copper_ore", ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
+    ores.add(new UBOreConfig("basemetals:lead_ore", ModInfo.MODID + ":blocks/overlays/basemetals/lead"));
+    ores.add(new UBOreConfig("basemetals:mercury_ore", ModInfo.MODID + ":blocks/overlays/basemetals/mercury"));
+    ores.add(new UBOreConfig("basemetals:nickel_ore", ModInfo.MODID + ":blocks/overlays/basemetals/nickel"));
+    ores.add(new UBOreConfig("basemetals:platinum_ore", ModInfo.MODID + ":blocks/overlays/basemetals/platinum"));
+    ores.add(new UBOreConfig("basemetals:silver_ore", ModInfo.MODID + ":blocks/overlays/thermalfoundation/silver"));
+    ores.add(new UBOreConfig("basemetals:tin_ore", ModInfo.MODID + ":blocks/overlays/basemetals/tin"));
+    ores.add(new UBOreConfig("basemetals:zinc_ore", ModInfo.MODID + ":blocks/overlays/basemetals/zinc"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getBaseMineralsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("baseminerals:lithium_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/lithium"));
+    ores.add(new UBOreConfig("baseminerals:niter_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/niter"));
+    ores.add(new UBOreConfig("baseminerals:phosphorus_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/phosphorus"));
+    ores.add(new UBOreConfig("baseminerals:potash_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/potash"));
+    ores.add(new UBOreConfig("baseminerals:salt_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/salt"));
+    ores.add(new UBOreConfig("baseminerals:saltpeter_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/saltpeter"));
+    ores.add(new UBOreConfig("baseminerals:sulfur_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/sulfur"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getBetterUndergroundOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("betterunderground:blockfossils", ModInfo.MODID + ":blocks/overlays/custom/fossil"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getBiomesOPlentyOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "biomesoplenty:gem_ore";
+    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/custom/ruby"));
+    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/custom/peridot"));
+    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/custom/topaz"));
+    ores.add(new UBOreConfig(oreName, 4, ModInfo.MODID + ":blocks/overlays/custom/tanzanite"));
+    ores.add(new UBOreConfig(oreName, 5, ModInfo.MODID + ":blocks/overlays/custom/malachite"));
+    ores.add(new UBOreConfig(oreName, 6, ModInfo.MODID + ":blocks/overlays/custom/sapphire"));
+    ores.add(new UBOreConfig(oreName, 7, ModInfo.MODID + ":blocks/overlays/custom/amber"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getBiomeYoullGoOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("byg:fossilstone", ModInfo.MODID + ":blocks/overlays/byg/fossil_stone"));
+    ores.add(new UBOreConfig("byg:lathariumore", ModInfo.MODID + ":blocks/overlays/byg/latharium_ore"));
+    ores.add(new UBOreConfig("byg:pendoriteore", ModInfo.MODID + ":blocks/overlays/byg/pendorite_ore"));
+    ores.add(new UBOreConfig("byg:tamreliteore", ModInfo.MODID + ":blocks/overlays/byg/tamrelite_ore"));
     return ores;
   }
 
@@ -323,55 +286,177 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getCurioOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("curio:blockmysticore", ModInfo.MODID + ":blocks/overlays/curio/mystic_ore"));
-    return ores;
-  }
-
   private ArrayList<UBOreConfig> getCandyWorldOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
     ores.add(new UBOreConfig("candymod:cookie_ore_block", ModInfo.MODID + ":blocks/overlays/candyworld/cookie_ore"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getMysticalWorldOres() {
+  private ArrayList<UBOreConfig> getCommunityModOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("mysticalworld:amethyst_ore", ModInfo.MODID + ":blocks/overlays/mysticalworld/amethyst"));
-    ores.add(new UBOreConfig("mysticalworld:copper_ore", ModInfo.MODID + ":blocks/overlays/mysticalworld/copper"));
-    ores.add(new UBOreConfig("mysticalworld:silver_ore", ModInfo.MODID + ":blocks/overlays/mysticalworld/silver"));
+    ores.add(new UBOreConfig("community_mod:squirrel_ore", ModInfo.MODID + ":blocks/overlays/community_mod/squirrel_ore"));
+    ores.add(new UBOreConfig("community_mod:poke_ore", ModInfo.MODID + ":blocks/overlays/community_mod/poke_ore"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getProjectRedOres() {
+  private ArrayList<UBOreConfig> getCurioOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("projectred-exploration:ore", 0, ModInfo.MODID + ":blocks/overlays/projectred/ruby_ore"));
-    ores.add(new UBOreConfig("projectred-exploration:ore", 1, ModInfo.MODID + ":blocks/overlays/projectred/sapphire_ore"));
-    ores.add(new UBOreConfig("projectred-exploration:ore", 2, ModInfo.MODID + ":blocks/overlays/projectred/peridot_ore"));
-    ores.add(new UBOreConfig("projectred-exploration:ore", 3, ModInfo.MODID + ":blocks/overlays/projectred/copper_ore"));
-    ores.add(new UBOreConfig("projectred-exploration:ore", 4, ModInfo.MODID + ":blocks/overlays/projectred/tin_ore"));
-    ores.add(new UBOreConfig("projectred-exploration:ore", 5, ModInfo.MODID + ":blocks/overlays/projectred/silver_ore"));
-    ores.add(new UBOreConfig("projectred-exploration:ore", 6, ModInfo.MODID + ":blocks/overlays/projectred/electrotine_ore"));
+    ores.add(new UBOreConfig("curio:blockmysticore", ModInfo.MODID + ":blocks/overlays/curio/mystic_ore"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getActuallyAdditionsOres() {
+  private ArrayList<UBOreConfig> getCustomIdeasOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "actuallyadditions:block_misc";
-    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/custom/black_quarz"));
+    ores.add(new UBOreConfig("custom:silversteel_ore", ModInfo.MODID + ":blocks/overlays/customideas/silversteel_ore"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getAppliedEnergisticsOres() {
+  private ArrayList<UBOreConfig> getDartcraftOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("appliedenergistics2:quartz_ore", "appliedenergistics2:blocks/charged_quartz_ore_light"));
-    ores.add(new UBOreConfig("appliedenergistics2:charged_quartz_ore", "appliedenergistics2:blocks/charged_quartz_ore_light"));
+    ores.add(new UBOreConfig("dartcraftreloaded:orepower", ModInfo.MODID + ":blocks/overlays/dartcraftreloaded/orepower"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getDenseMetalsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("densemetals:dense_antimony_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_antimony_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_bismuth_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_bismuth_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_coal_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_coal_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_copper_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_copper_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_diamond_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_diamond_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_emerald_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_emerald_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_gold_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_gold_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_iron_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_iron_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_lapis_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_lapis_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_lead_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_lead_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_mercury_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_mercury_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_nickel_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_nickel_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_platinum_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_platinum_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_redstone_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_redstone_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_silver_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_silver_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_tin_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_tin_ore"));
+    ores.add(new UBOreConfig("densemetals:dense_zinc_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_zinc_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getDraconicEvolutionOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("draconicevolution:draconium_ore", 0, ModInfo.MODID + ":blocks/overlays/draconicevolution/draconium"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getEnderOreOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("enderore:ore_ender", ModInfo.MODID + ":blocks/overlays/enderore/ender"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getExtremeReactorsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("bigreactors:brore", 0, ModInfo.MODID + ":blocks/overlays/bigreactors/yellorite"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getFloricraftOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("floricraft:ore_salt", ModInfo.MODID + ":blocks/overlays/floricraft/ore_salt"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getForestyOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "forestry:resources";
+    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/custom/apatite"));
+    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
+    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/thermalfoundation/tin"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getGeolosysOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("geolosys:ore", 0, ModInfo.MODID + ":blocks/overlays/geolosys/hematite"));
+    ores.add(new UBOreConfig("geolosys:ore", 1, ModInfo.MODID + ":blocks/overlays/geolosys/limonite"));
+    ores.add(new UBOreConfig("geolosys:ore", 2, ModInfo.MODID + ":blocks/overlays/geolosys/malachite"));
+    ores.add(new UBOreConfig("geolosys:ore", 3, ModInfo.MODID + ":blocks/overlays/geolosys/azurite"));
+    ores.add(new UBOreConfig("geolosys:ore", 4, ModInfo.MODID + ":blocks/overlays/geolosys/cassiterite"));
+    ores.add(new UBOreConfig("geolosys:ore", 5, ModInfo.MODID + ":blocks/overlays/geolosys/teallite"));
+    ores.add(new UBOreConfig("geolosys:ore", 6, ModInfo.MODID + ":blocks/overlays/geolosys/galena"));
+    ores.add(new UBOreConfig("geolosys:ore", 7, ModInfo.MODID + ":blocks/overlays/geolosys/bauxite"));
+    ores.add(new UBOreConfig("geolosys:ore", 8, ModInfo.MODID + ":blocks/overlays/geolosys/platinum"));
+    ores.add(new UBOreConfig("geolosys:ore", 9, ModInfo.MODID + ":blocks/overlays/geolosys/autunite"));
+    ores.add(new UBOreConfig("geolosys:ore", 10, ModInfo.MODID + ":blocks/overlays/geolosys/sphalerite"));
+
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 0, ModInfo.MODID + ":blocks/overlays/geolosys/coal"));
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 1, ModInfo.MODID + ":blocks/overlays/geolosys/cinnabar"));
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 2, ModInfo.MODID + ":blocks/overlays/geolosys/gold"));
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 3, ModInfo.MODID + ":blocks/overlays/geolosys/lapis"));
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 4, ModInfo.MODID + ":blocks/overlays/geolosys/quartz"));
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 5, ModInfo.MODID + ":blocks/overlays/geolosys/kimberlite"));
+    ores.add(new UBOreConfig("geolosys:ore_vanilla", 6, ModInfo.MODID + ":blocks/overlays/geolosys/beryl"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getGrimpackOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("grimpack:aluminum_ore", ModInfo.MODID + ":blocks/overlays/grimpack/aluminum_ore"));
+    ores.add(new UBOreConfig("grimpack:oil_ore", ModInfo.MODID + ":blocks/overlays/grimpack/oil_ore"));
+    ores.add(new UBOreConfig("grimpack:black_diamond_ore", ModInfo.MODID + ":blocks/overlays/grimpack/black_diamond_ore"));
+    ores.add(new UBOreConfig("grimpack:element_115_ore", ModInfo.MODID + ":blocks/overlays/grimpack/element_115_ore"));
+    ores.add(new UBOreConfig("grimpack:randomite", ModInfo.MODID + ":blocks/overlays/grimpack/randomite"));
     return ores;
   }
 
   private ArrayList<UBOreConfig> getGrowthcraftOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
     ores.add(new UBOreConfig("growthcraft:salt_ore", ModInfo.MODID + ":blocks/overlays/growthcraft/salt_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getImmersiveEngineeringOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "immersiveengineering:ore";
+    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
+    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/aluminum"));
+    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/thermalfoundation/lead"));
+    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/thermalfoundation/silver"));
+    ores.add(new UBOreConfig(oreName, 4, ModInfo.MODID + ":blocks/overlays/thermalfoundation/nickel"));
+    ores.add(new UBOreConfig(oreName, 5, ModInfo.MODID + ":blocks/overlays/custom/uranium"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getIndustrialCraftClassicOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "ic2-classic-spmod:blockmetal";
+    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
+    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/thermalfoundation/lead"));
+    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/tin"));
+    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/custom/uranium"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getIndustrialCraftOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "ic2:resource";
+    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
+    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/thermalfoundation/lead"));
+    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/thermalfoundation/tin"));
+    ores.add(new UBOreConfig(oreName, 4, ModInfo.MODID + ":blocks/overlays/custom/uranium"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getMatterOverdriveLegacyOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("matteroverdrive:dilithium_ore", 0, ModInfo.MODID + ":blocks/overlays/matteroverdrivelegacy/dilithium_ore"));
+    ores.add(new UBOreConfig("matteroverdrive:tritanium_ore", 0, ModInfo.MODID + ":blocks/overlays/matteroverdrivelegacy/tritanium_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getMekanismOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "mekanism:oreblock";
+    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/mekanism/osmium"));
+    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/mekanism/copper"));
+    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/mekanism/tin"));
     return ores;
   }
 
@@ -402,6 +487,67 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     ores.add(new UBOreConfig("metallurgy:sulfur_ore", 0, ModInfo.MODID + ":blocks/overlays/metallurgy4/sulfur_ore"));
     ores.add(new UBOreConfig("metallurgy:tin_ore", 0, ModInfo.MODID + ":blocks/overlays/metallurgy4/tin_ore"));
     ores.add(new UBOreConfig("metallurgy:zinc_ore", 0, ModInfo.MODID + ":blocks/overlays/metallurgy4/zinc_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getModernMetalsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("modernmetals:aluminum_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/aluminum"));
+    ores.add(new UBOreConfig("modernmetals:beryllium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/beryllium"));
+    ores.add(new UBOreConfig("modernmetals:boron_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/boron"));
+    ores.add(new UBOreConfig("modernmetals:cadmium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/cadmium"));
+    ores.add(new UBOreConfig("modernmetals:chromium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/chromium"));
+    ores.add(new UBOreConfig("modernmetals:iridium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/iridium"));
+    ores.add(new UBOreConfig("modernmetals:magnesium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/magnesium"));
+    ores.add(new UBOreConfig("modernmetals:manganese_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/manganese"));
+    ores.add(new UBOreConfig("modernmetals:osmium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/osmium"));
+    ores.add(new UBOreConfig("modernmetals:plutonium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/plutonium"));
+    ores.add(new UBOreConfig("modernmetals:rutile_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/rutile"));
+    ores.add(new UBOreConfig("modernmetals:tantalum_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/tantalum"));
+    ores.add(new UBOreConfig("modernmetals:titanium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/titanium"));
+    ores.add(new UBOreConfig("modernmetals:tungsten_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/tungsten"));
+    ores.add(new UBOreConfig("modernmetals:uranium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/uranium"));
+    ores.add(new UBOreConfig("modernmetals:zirconium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/zirconium"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getMoGlowstoneOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("moglowstone:glowstone_ore", ModInfo.MODID + ":blocks/overlays/moglowstone/glowstone_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getMubbleOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("mubble:vanadium_ore", ModInfo.MODID + ":blocks/overlays/mubble/vanadium_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getMysticalAgricultureOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("mysticalagriculture:inferium_ore", "mysticalagriculture:blocks/inferium_ore"));
+    ores.add(new UBOreConfig("mysticalagriculture:prosperity_ore", "mysticalagriculture:blocks/prosperity_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getMysticalWorldOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("mysticalworld:amethyst_ore", ModInfo.MODID + ":blocks/overlays/mysticalworld/amethyst"));
+    ores.add(new UBOreConfig("mysticalworld:copper_ore", ModInfo.MODID + ":blocks/overlays/mysticalworld/copper"));
+    ores.add(new UBOreConfig("mysticalworld:silver_ore", ModInfo.MODID + ":blocks/overlays/mysticalworld/silver"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getNuclearcraftOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("nuclearcraft:ore", 0, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_copper"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 1, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_tin"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 2, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_lead"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 3, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_thorium"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 4, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_uranium"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 5, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_boron"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 6, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_lithium"));
+    ores.add(new UBOreConfig("nuclearcraft:ore", 7, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_magnesium"));
     return ores;
   }
 
@@ -439,23 +585,61 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getNuclearcraftOres() {
+  private ArrayList<UBOreConfig> getProjectRedOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("nuclearcraft:ore", 0, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_copper"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 1, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_tin"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 2, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_lead"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 3, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_thorium"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 4, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_uranium"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 5, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_boron"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 6, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_lithium"));
-    ores.add(new UBOreConfig("nuclearcraft:ore", 7, ModInfo.MODID + ":blocks/overlays/nuclearcraft/ore_magnesium"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 0, ModInfo.MODID + ":blocks/overlays/projectred/ruby_ore"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 1, ModInfo.MODID + ":blocks/overlays/projectred/sapphire_ore"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 2, ModInfo.MODID + ":blocks/overlays/projectred/peridot_ore"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 3, ModInfo.MODID + ":blocks/overlays/projectred/copper_ore"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 4, ModInfo.MODID + ":blocks/overlays/projectred/tin_ore"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 5, ModInfo.MODID + ":blocks/overlays/projectred/silver_ore"));
+    ores.add(new UBOreConfig("projectred-exploration:ore", 6, ModInfo.MODID + ":blocks/overlays/projectred/electrotine_ore"));
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getMatterOverdriveLegacyOres() {
+  private ArrayList<UBOreConfig> getPyrotechOres() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("matteroverdrive:dilithium_ore", 0, ModInfo.MODID + ":blocks/overlays/matteroverdrivelegacy/dilithium_ore"));
-    ores.add(new UBOreConfig("matteroverdrive:tritanium_ore", 0, ModInfo.MODID + ":blocks/overlays/matteroverdrivelegacy/tritanium_ore"));
+    ores.add(new UBOreConfig("pyrotech:fossil_ore", ModInfo.MODID + ":blocks/overlays/pyrotech/fossil_ore"));
+    ores.add(new UBOreConfig("pyrotech:dense_coal_ore", ModInfo.MODID + ":blocks/overlays/byg/dense_coal_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getRailcraftOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    String oreName = "railcraft:ore_metal";
+    String oreNamePoor = "railcraft:ore_metal_poor";
+    ores.add(new UBOreConfig(oreName, 0, "railcraft:blocks/ore_copper"));
+    ores.add(new UBOreConfig(oreName, 1, "railcraft:blocks/ore_tin"));
+    ores.add(new UBOreConfig(oreName, 2, "railcraft:blocks/ore_lead"));
+    ores.add(new UBOreConfig(oreName, 3, "railcraft:blocks/ore_silver"));
+    ores.add(new UBOreConfig(oreName, 4, "railcraft:blocks/ore_nickel"));
+    ores.add(new UBOreConfig(oreName, 5, "railcraft:blocks/ore_zinc"));
+    ores.add(new UBOreConfig(oreNamePoor, 0, "railcraft:blocks/ore_poor_iron"));
+    ores.add(new UBOreConfig(oreNamePoor, 1, "railcraft:blocks/ore_poor_gold"));
+    ores.add(new UBOreConfig(oreNamePoor, 2, "railcraft:blocks/ore_poor_copper"));
+    ores.add(new UBOreConfig(oreNamePoor, 3, "railcraft:blocks/ore_poor_tin"));
+    ores.add(new UBOreConfig(oreNamePoor, 4, "railcraft:blocks/ore_poor_lead"));
+    ores.add(new UBOreConfig(oreNamePoor, 5, "railcraft:blocks/ore_poor_silver"));
+    ores.add(new UBOreConfig(oreNamePoor, 6, "railcraft:blocks/ore_poor_nickel"));
+    ores.add(new UBOreConfig(oreNamePoor, 7, "railcraft:blocks/ore_poor_zinc"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getRFToolsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("rftools:dimensional_shard_ore", 0, ModInfo.MODID + ":blocks/overlays/rftools/dimensionalshard"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getScalingHealthOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("scalinghealth:crystalore", ModInfo.MODID + ":blocks/overlays/scalinghealth/crystalore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getStarWarsOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("starwars:ore_crystal", ModInfo.MODID + ":blocks/overlays/starwars/ore_crystal"));
     return ores;
   }
 
@@ -463,200 +647,6 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
     ores.add(new UBOreConfig("taiga:dilithium_ore", 0, ModInfo.MODID + ":blocks/overlays/taiga/dilithium"));
     ores.add(new UBOreConfig("taiga:vibranium_ore", 0, ModInfo.MODID + ":blocks/overlays/taiga/vibranium"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getGeolosysOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("geolosys:ore", 0, ModInfo.MODID + ":blocks/overlays/geolosys/hematite"));
-    ores.add(new UBOreConfig("geolosys:ore", 1, ModInfo.MODID + ":blocks/overlays/geolosys/limonite"));
-    ores.add(new UBOreConfig("geolosys:ore", 2, ModInfo.MODID + ":blocks/overlays/geolosys/malachite"));
-    ores.add(new UBOreConfig("geolosys:ore", 3, ModInfo.MODID + ":blocks/overlays/geolosys/azurite"));
-    ores.add(new UBOreConfig("geolosys:ore", 4, ModInfo.MODID + ":blocks/overlays/geolosys/cassiterite"));
-    ores.add(new UBOreConfig("geolosys:ore", 5, ModInfo.MODID + ":blocks/overlays/geolosys/teallite"));
-    ores.add(new UBOreConfig("geolosys:ore", 6, ModInfo.MODID + ":blocks/overlays/geolosys/galena"));
-    ores.add(new UBOreConfig("geolosys:ore", 7, ModInfo.MODID + ":blocks/overlays/geolosys/bauxite"));
-    ores.add(new UBOreConfig("geolosys:ore", 8, ModInfo.MODID + ":blocks/overlays/geolosys/platinum"));
-    ores.add(new UBOreConfig("geolosys:ore", 9, ModInfo.MODID + ":blocks/overlays/geolosys/autunite"));
-    ores.add(new UBOreConfig("geolosys:ore", 10, ModInfo.MODID + ":blocks/overlays/geolosys/sphalerite"));
-
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 0, ModInfo.MODID + ":blocks/overlays/geolosys/coal"));
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 1, ModInfo.MODID + ":blocks/overlays/geolosys/cinnabar"));
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 2, ModInfo.MODID + ":blocks/overlays/geolosys/gold"));
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 3, ModInfo.MODID + ":blocks/overlays/geolosys/lapis"));
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 4, ModInfo.MODID + ":blocks/overlays/geolosys/quartz"));
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 5, ModInfo.MODID + ":blocks/overlays/geolosys/kimberlite"));
-    ores.add(new UBOreConfig("geolosys:ore_vanilla", 6, ModInfo.MODID + ":blocks/overlays/geolosys/beryl"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getBaseMetalsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("basemetals:antimony_ore", ModInfo.MODID + ":blocks/overlays/basemetals/antimony"));
-    ores.add(new UBOreConfig("basemetals:bismuth_ore", ModInfo.MODID + ":blocks/overlays/basemetals/bismuth"));
-    ores.add(new UBOreConfig("basemetals:copper_ore", ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
-    ores.add(new UBOreConfig("basemetals:lead_ore", ModInfo.MODID + ":blocks/overlays/basemetals/lead"));
-    ores.add(new UBOreConfig("basemetals:mercury_ore", ModInfo.MODID + ":blocks/overlays/basemetals/mercury"));
-    ores.add(new UBOreConfig("basemetals:nickel_ore", ModInfo.MODID + ":blocks/overlays/basemetals/nickel"));
-    ores.add(new UBOreConfig("basemetals:platinum_ore", ModInfo.MODID + ":blocks/overlays/basemetals/platinum"));
-    ores.add(new UBOreConfig("basemetals:silver_ore", ModInfo.MODID + ":blocks/overlays/thermalfoundation/silver"));
-    ores.add(new UBOreConfig("basemetals:tin_ore", ModInfo.MODID + ":blocks/overlays/basemetals/tin"));
-    ores.add(new UBOreConfig("basemetals:zinc_ore", ModInfo.MODID + ":blocks/overlays/basemetals/zinc"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getBaseMineralsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("baseminerals:lithium_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/lithium"));
-    ores.add(new UBOreConfig("baseminerals:niter_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/niter"));
-    ores.add(new UBOreConfig("baseminerals:phosphorus_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/phosphorus"));
-    ores.add(new UBOreConfig("baseminerals:potash_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/potash"));
-    ores.add(new UBOreConfig("baseminerals:salt_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/salt"));
-    ores.add(new UBOreConfig("baseminerals:saltpeter_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/saltpeter"));
-    ores.add(new UBOreConfig("baseminerals:sulfur_ore", ModInfo.MODID + ":blocks/overlays/baseminerals/sulfur"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getMysticalAgricultureOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("mysticalagriculture:inferium_ore", "mysticalagriculture:blocks/inferium_ore"));
-    ores.add(new UBOreConfig("mysticalagriculture:prosperity_ore", "mysticalagriculture:blocks/prosperity_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getBetterUndergroundOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("betterunderground:blockfossils", ModInfo.MODID + ":blocks/overlays/custom/fossil"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getBiomesOPlentyOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "biomesoplenty:gem_ore";
-    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/custom/ruby"));
-    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/custom/peridot"));
-    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/custom/topaz"));
-    ores.add(new UBOreConfig(oreName, 4, ModInfo.MODID + ":blocks/overlays/custom/tanzanite"));
-    ores.add(new UBOreConfig(oreName, 5, ModInfo.MODID + ":blocks/overlays/custom/malachite"));
-    ores.add(new UBOreConfig(oreName, 6, ModInfo.MODID + ":blocks/overlays/custom/sapphire"));
-    ores.add(new UBOreConfig(oreName, 7, ModInfo.MODID + ":blocks/overlays/custom/amber"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getDraconicEvolutionOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("draconicevolution:draconium_ore", 0, ModInfo.MODID + ":blocks/overlays/draconicevolution/draconium"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getEnderOreOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("enderore:ore_ender", ModInfo.MODID + ":blocks/overlays/enderore/ender"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getDenseMetalsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("densemetals:dense_antimony_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_antimony_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_bismuth_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_bismuth_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_coal_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_coal_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_copper_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_copper_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_diamond_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_diamond_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_emerald_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_emerald_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_gold_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_gold_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_iron_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_iron_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_lapis_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_lapis_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_lead_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_lead_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_mercury_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_mercury_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_nickel_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_nickel_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_platinum_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_platinum_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_redstone_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_redstone_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_silver_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_silver_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_tin_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_tin_ore"));
-    ores.add(new UBOreConfig("densemetals:dense_zinc_ore", ModInfo.MODID + ":blocks/overlays/densemetals/dense_zinc_ore"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getExtremeReactorsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("bigreactors:brore", 0, ModInfo.MODID + ":blocks/overlays/bigreactors/yellorite"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getForestyOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "forestry:resources";
-    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/custom/apatite"));
-    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
-    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/thermalfoundation/tin"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getIndustrialCraftOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "ic2:resource";
-    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
-    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/thermalfoundation/lead"));
-    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/thermalfoundation/tin"));
-    ores.add(new UBOreConfig(oreName, 4, ModInfo.MODID + ":blocks/overlays/custom/uranium"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getIndustrialCraftClassicOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "ic2-classic-spmod:blockmetal";
-    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
-    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/thermalfoundation/lead"));
-    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/tin"));
-    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/custom/uranium"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getImmersiveEngineeringOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "immersiveengineering:ore";
-    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/thermalfoundation/copper"));
-    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/thermalfoundation/aluminum"));
-    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/thermalfoundation/lead"));
-    ores.add(new UBOreConfig(oreName, 3, ModInfo.MODID + ":blocks/overlays/thermalfoundation/silver"));
-    ores.add(new UBOreConfig(oreName, 4, ModInfo.MODID + ":blocks/overlays/thermalfoundation/nickel"));
-    ores.add(new UBOreConfig(oreName, 5, ModInfo.MODID + ":blocks/overlays/custom/uranium"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getMekanismOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "mekanism:oreblock";
-    ores.add(new UBOreConfig(oreName, 0, ModInfo.MODID + ":blocks/overlays/mekanism/osmium"));
-    ores.add(new UBOreConfig(oreName, 1, ModInfo.MODID + ":blocks/overlays/mekanism/copper"));
-    ores.add(new UBOreConfig(oreName, 2, ModInfo.MODID + ":blocks/overlays/mekanism/tin"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getModernMetalsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("modernmetals:aluminum_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/aluminum"));
-    ores.add(new UBOreConfig("modernmetals:beryllium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/beryllium"));
-    ores.add(new UBOreConfig("modernmetals:boron_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/boron"));
-    ores.add(new UBOreConfig("modernmetals:cadmium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/cadmium"));
-    ores.add(new UBOreConfig("modernmetals:chromium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/chromium"));
-    ores.add(new UBOreConfig("modernmetals:iridium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/iridium"));
-    ores.add(new UBOreConfig("modernmetals:magnesium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/magnesium"));
-    ores.add(new UBOreConfig("modernmetals:manganese_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/manganese"));
-    ores.add(new UBOreConfig("modernmetals:osmium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/osmium"));
-    ores.add(new UBOreConfig("modernmetals:plutonium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/plutonium"));
-    ores.add(new UBOreConfig("modernmetals:rutile_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/rutile"));
-    ores.add(new UBOreConfig("modernmetals:tantalum_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/tantalum"));
-    ores.add(new UBOreConfig("modernmetals:titanium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/titanium"));
-    ores.add(new UBOreConfig("modernmetals:tungsten_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/tungsten"));
-    ores.add(new UBOreConfig("modernmetals:uranium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/uranium"));
-    ores.add(new UBOreConfig("modernmetals:zirconium_ore", ModInfo.MODID + ":blocks/overlays/modernmetals/zirconium"));
-    return ores;
-  }
-
-  private ArrayList<UBOreConfig> getRFToolsOres() {
-    ArrayList<UBOreConfig> ores = new ArrayList<>();
-    ores.add(new UBOreConfig("rftools:dimensional_shard_ore", 0, ModInfo.MODID + ":blocks/overlays/rftools/dimensionalshard"));
     return ores;
   }
 
@@ -702,24 +692,27 @@ public class ModOreRegistrar implements UBModOreRegistrar {
     return ores;
   }
 
-  private ArrayList<UBOreConfig> getRailcraftOres() {
+  private ArrayList<UBOreConfig> getTreasure2Ores() {
     ArrayList<UBOreConfig> ores = new ArrayList<>();
-    String oreName = "railcraft:ore_metal";
-    String oreNamePoor = "railcraft:ore_metal_poor";
-    ores.add(new UBOreConfig(oreName, 0, "railcraft:blocks/ore_copper"));
-    ores.add(new UBOreConfig(oreName, 1, "railcraft:blocks/ore_tin"));
-    ores.add(new UBOreConfig(oreName, 2, "railcraft:blocks/ore_lead"));
-    ores.add(new UBOreConfig(oreName, 3, "railcraft:blocks/ore_silver"));
-    ores.add(new UBOreConfig(oreName, 4, "railcraft:blocks/ore_nickel"));
-    ores.add(new UBOreConfig(oreName, 5, "railcraft:blocks/ore_zinc"));
-    ores.add(new UBOreConfig(oreNamePoor, 0, "railcraft:blocks/ore_poor_iron"));
-    ores.add(new UBOreConfig(oreNamePoor, 1, "railcraft:blocks/ore_poor_gold"));
-    ores.add(new UBOreConfig(oreNamePoor, 2, "railcraft:blocks/ore_poor_copper"));
-    ores.add(new UBOreConfig(oreNamePoor, 3, "railcraft:blocks/ore_poor_tin"));
-    ores.add(new UBOreConfig(oreNamePoor, 4, "railcraft:blocks/ore_poor_lead"));
-    ores.add(new UBOreConfig(oreNamePoor, 5, "railcraft:blocks/ore_poor_silver"));
-    ores.add(new UBOreConfig(oreNamePoor, 6, "railcraft:blocks/ore_poor_nickel"));
-    ores.add(new UBOreConfig(oreNamePoor, 7, "railcraft:blocks/ore_poor_zinc"));
+    ores.add(new UBOreConfig("tresure2:ruby_ore", ModInfo.MODID + ":blocks/overlays/tresure2/ruby_nugget"));
+    ores.add(new UBOreConfig("tresure2:sapphire_ore", ModInfo.MODID + ":blocks/overlays/tresure2/sapphire_nugget"));
     return ores;
   }
+
+  private ArrayList<UBOreConfig> getWildnatureOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("wildnature:amethyst_ore", ModInfo.MODID + ":blocks/overlays/wildnature/amethyst_ore"));
+    ores.add(new UBOreConfig("wildnature:malachite_ore", ModInfo.MODID + ":blocks/overlays/wildnature/malachite_ore"));
+    ores.add(new UBOreConfig("wildnature:ruby_ore", ModInfo.MODID + ":blocks/overlays/wildnature/ruby_ore"));
+    ores.add(new UBOreConfig("wildnature:sapphire_ore", ModInfo.MODID + ":blocks/overlays/wildnature/sapphire_ore"));
+    ores.add(new UBOreConfig("wildnature:silver_ore", ModInfo.MODID + ":blocks/overlays/wildnature/silver_ore"));
+    return ores;
+  }
+
+  private ArrayList<UBOreConfig> getWorldsRetoldOres() {
+    ArrayList<UBOreConfig> ores = new ArrayList<>();
+    ores.add(new UBOreConfig("worldsretold:cryonite_ore", ModInfo.MODID + ":blocks/overlays/worldsretold/cryonite_ore"));
+    return ores;
+  }
+
 }

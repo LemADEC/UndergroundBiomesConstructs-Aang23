@@ -1,5 +1,7 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
 import net.minecraft.block.Block;
@@ -14,14 +16,15 @@ import net.minecraft.util.NonNullList;
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.intermod.DropsRegistry;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
+import mcp.MethodsReturnNonnullByDefault;
 
 import net.minecraft.item.ItemStack;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class MetamorphicMossyCobble extends MetamorphicStone {
   public static final String internal_name = "metamorphic_cobble_mossy";
 
@@ -49,17 +52,6 @@ public class MetamorphicMossyCobble extends MetamorphicStone {
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return itemBlock;
-  }
-
-  @Override
-  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    Item mossyCobbleBlock = API.METAMORPHIC_MOSSY_COBBLE.getItemBlock();
-    int meta = state.getBlock().getMetaFromState(state);
-    ItemStack itemStack = new ItemStack(mossyCobbleBlock , 1, meta);
-    List<ItemStack> result = new ArrayList<ItemStack>();
-    result.add(itemStack);
-    DropsRegistry.INSTANCE.addDrops(result, this, world, pos, state, fortune);
-    return result;
   }
 
   @Override

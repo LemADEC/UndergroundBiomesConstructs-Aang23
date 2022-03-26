@@ -1,7 +1,11 @@
 package exterminatorjeff.undergroundbiomes.common.block;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Predicate;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
+import mcp.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -17,6 +21,8 @@ import static exterminatorjeff.undergroundbiomes.api.enums.IgneousVariant.*;
 /**
  * @author CurtisA, LouisDB
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class IgneousOvergrownSnowed extends IgneousStone {
   public static final String internal_name = "igneous_overgrown_snowed";
 
