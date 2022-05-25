@@ -2,6 +2,7 @@ package exterminatorjeff.undergroundbiomes.config;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -351,9 +352,8 @@ public class UBConfig implements UBSettings {
     if (includedDimensionsSet.size() > 0) {
       ubifiedDims.addAll(includedDimensionsSet);
     } else {
-      Integer[] allDims = DimensionManager.getIDs();// .getDimensions(DimensionType.OVERWORLD);
-      for (int dim : allDims)
-        ubifiedDims.add(dim);
+      Integer[] allDims = DimensionManager.getStaticDimensionIDs();
+      ubifiedDims.addAll(Arrays.asList(allDims));
       ubifiedDims.removeAll(excludedDimensionsSet);
     }
     return ubifiedDims;
