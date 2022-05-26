@@ -6,21 +6,19 @@ package exterminatorjeff.undergroundbiomes.core;
 import exterminatorjeff.undergroundbiomes.api.UBDimensionalStrataColumnProvider;
 import exterminatorjeff.undergroundbiomes.api.UBStrataColumn;
 import exterminatorjeff.undergroundbiomes.api.UBStrataColumnProvider;
-import exterminatorjeff.undergroundbiomes.config.ConfigManager;
 import exterminatorjeff.undergroundbiomes.config.UBConfig;
 import exterminatorjeff.undergroundbiomes.world.WorldGenManager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.dedicated.PropertyManager;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.OreGenEvent;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
-import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -30,15 +28,12 @@ public class DimensionManager implements UBDimensionalStrataColumnProvider {
   public HashMap<Integer, WorldGenManager> managers = new HashMap<>();
   private boolean villageRegistered = false;
   private boolean oreRegistered = false;
-  private final ConfigManager configManager;
 
-  public DimensionManager(ConfigManager configManager) {
-    this.configManager = configManager;
+  public DimensionManager() {
   }
 
   public void refreshManagers() {
-    managers = new HashMap<Integer, WorldGenManager>();
-
+    // refresh event registration
     if (UBConfig.SPECIFIC.ubifyVillages() && !villageRegistered) {
       MinecraftForge.TERRAIN_GEN_BUS.register(this);
       villageRegistered = true;
@@ -57,6 +52,16 @@ public class DimensionManager implements UBDimensionalStrataColumnProvider {
       MinecraftForge.ORE_GEN_BUS.unregister(this);
       oreRegistered = false;
     }
+
+    // clear existing managers
+    for (final WorldGenManager manager : managers.values()) {
+      if (manager != null) {
+        MinecraftForge.EVENT_BUS.unregister(manager);
+      }
+    }
+    managers = new HashMap<>();
+
+    // create and register new managers
     ((UBConfig) (UBConfig.SPECIFIC)).getUBifiedDimensions().forEach(dimensionID -> {
       WorldGenManager manager = new WorldGenManager(dimensionID);
       MinecraftForge.EVENT_BUS.register(manager);
@@ -64,72 +69,35 @@ public class DimensionManager implements UBDimensionalStrataColumnProvider {
     });
   }
 
-  @SuppressWarnings("unused")
-  public void serverLoad(MinecraftServer server) {
-    if (server == null) return;
-    //logger.info("server starting");
-    File worldSaveDirectory = null;
-    String worldName = server.getFolderName();
-    if (server.isSinglePlayer()) {
-      File saveDirectory = server.getFile("saves");
-      worldSaveDirectory = new File(saveDirectory, worldName);
-    } else {
-      PropertyManager settings = new PropertyManager(server.getFile("server.properties"));
-      worldName = settings.getStringProperty("level-name", worldName);
-      worldSaveDirectory = server.getFile(worldName);
-    }
-    try {
-      WorldServer worldServer = server.getWorld(0);
-      File worldLocation = worldServer.getChunkSaveLocation();
-      //UndergroundBiomes.logger.info(world.toString() + " " +worldLocation.getAbsolutePath());
-      configManager.setWorldFile(worldLocation);
-    } catch (NullPointerException e) {
-      throw e;
-    }
-    refreshManagers();
-  }
-
   @SubscribeEvent
   public void onWorldLoad(WorldEvent.Load event) {
-    if (managers.size() == 0) serverLoad(event.getWorld().getMinecraftServer());
+    if (managers.size() == 0) UndergroundBiomes.PROXY.onServerLoad(event.getWorld().getMinecraftServer());
     int dimension = event.getWorld().provider.getDimension();
     WorldGenManager target = managers.get(dimension);
     if (target != null) target.onWorldLoad(event);
   }
 
   @SubscribeEvent
-  public void onPopulateChunkPost(PopulateChunkEvent.Post event) {
-    int dimension = event.getWorld().provider.getDimension();
-    WorldGenManager target = managers.get(dimension);
-    if (target != null) target.onPopulateChunkPost(event);
+  public void onServerTick(final ServerTickEvent event) {
+    if (event.side != Side.SERVER || event.phase != Phase.END) {
+      return;
+    }
+    for (final WorldGenManager target : managers.values()) {
+      if (target != null) {
+        target.onTick();
+      }
+    }
   }
 
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public void onGenerateMinable(OreGenEvent.GenerateMinable event) {
     int dimension = event.getWorld().provider.getDimension();
     WorldGenManager target = managers.get(dimension);
     if (target != null) target.onGenerateMinable(event);
   }
 
-  /*@SubscribeEvent
-  public void onVillageSelectBlock(BiomeEvent.GetVillageBlockID event) {
-    // this goes to the overworld since there's no ID
-    WorldGenManager target = managers.get(0);
-    if (target != null) target.onVillageSelectBlock(event);
-  }*/
-
-  /*
-  @SubscribeEvent
-  public void initMapGen(InitMapGenEvent event) {
-    // this goes to the overworld since there's no ID
-    WorldGenManager target = managers.get(0);
-    if (target != null) target.initMapGen(event);
-
-  }
-  */
-
-  public void clearWorldManagers() {
-    managers = new HashMap<Integer, WorldGenManager>();
+  public void clear() {
+    managers.clear();
   }
 
   @Override

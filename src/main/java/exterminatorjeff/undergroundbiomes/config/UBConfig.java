@@ -67,6 +67,9 @@ public class UBConfig implements UBSettings {
       "DimensionSpecificSeeds");
   public final BooleanSetting ubifyVillages = new BooleanSetting(CATEGORY_GENERATION, "UBifyVillages");
   public final BooleanSetting replaceCobblestone = new BooleanSetting(CATEGORY_GENERATION, "ReplaceCobblestone");
+  public final BooleanSetting replaceStoneBrick = new BooleanSetting(CATEGORY_GENERATION, "ReplaceStoneBrick");
+  public final BooleanSetting replaceStoneSlab = new BooleanSetting(CATEGORY_GENERATION, "ReplaceStoneSlab");
+  public final BooleanSetting replaceStoneWall = new BooleanSetting(CATEGORY_GENERATION, "ReplaceStoneWall");
   public final BooleanSetting replaceOvergrown = new BooleanSetting(CATEGORY_GENERATION, "ReplaceOvergrown");
   public final BooleanSetting replaceMossyCobblestone = new BooleanSetting(CATEGORY_GENERATION, "ReplaceMossyCobble");
   public final BooleanSetting replaceMonsterStone = new BooleanSetting(CATEGORY_GENERATION, "ReplaceMonsterStone");
@@ -179,6 +182,12 @@ public class UBConfig implements UBSettings {
     ubifyVillages.initProperty(configuration, true, "Use UB stones in villages structures");
     replaceCobblestone.initProperty(configuration, true,
         "Replace vanilla cobblestone with UB variants, helps with RTG mountains compat for example, or with any world gen mod");
+    replaceStoneBrick.initProperty(configuration, true,
+        "Replace vanilla stone brick with UB variants, helps with structures");
+    replaceStoneSlab.initProperty(configuration, true,
+        "Replace vanilla slabs with UB variants, helps with structures");
+    replaceStoneWall.initProperty(configuration, true,
+        "Replace vanilla walls with UB variants, helps with structures");
     replaceMonsterStone.initProperty(configuration, true, "Replace monster eggs with UBC variants.");
     replaceOvergrown.initProperty(configuration, true,
         "Replace BOP's Overgrown Stone with UB variants, helps with BOP compatibility");
@@ -449,6 +458,21 @@ public class UBConfig implements UBSettings {
   @Override
   public boolean replaceCobblestone() {
     return replaceCobblestone.getValue();
+  }
+
+  @Override
+  public boolean replaceStoneBrick() {
+    return replaceStoneBrick.getValue();
+  }
+
+  @Override
+  public boolean replaceStoneSlab() {
+    return replaceStoneSlab.getValue();
+  }
+
+  @Override
+  public boolean replaceStoneWall() {
+    return replaceStoneWall.getValue();
   }
 
   @Override

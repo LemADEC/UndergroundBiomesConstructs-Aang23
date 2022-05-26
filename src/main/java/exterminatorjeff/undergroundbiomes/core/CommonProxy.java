@@ -106,6 +106,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.PropertyManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
@@ -135,7 +136,7 @@ public class CommonProxy {
   public void preInit(FMLPreInitializationEvent event) {
     LOGGER.debug("Start preInit");
     configManager = new ConfigManager(event);
-    dimensionManager = new DimensionManager(configManager);
+    dimensionManager = new DimensionManager();
 
     API.STONES_REGISTRY = StonesRegistry.INSTANCE;
     API.ORES_REGISTRY = OresRegistry.INSTANCE;
@@ -171,36 +172,31 @@ public class CommonProxy {
     API.ORES_REGISTRY.registerRecipes(null);
   }
 
+  // note: due to WorldLoad events being called before the ServerStart one, the following hack is used:
+  // - ServerStart event is ignored (below implementation is for reference only)
+  // - WorldLoad event is used to initialize the world data through onServerLoad
+  // - ServerStop event is used to call unload events and clear
   @SuppressWarnings("unused")
-  public void serverLoad(FMLServerAboutToStartEvent event) {
-    // logger.info("server starting");
+  public void onServerStart(FMLServerAboutToStartEvent event) {
     File worldSaveDirectory = null;
-    String worldName = event.getServer().getFolderName();
     if (event.getServer().isSinglePlayer()) {
       File saveDirectory = event.getServer().getFile("saves");
-      worldSaveDirectory = new File(saveDirectory, worldName);
     } else {
       PropertyManager settings = new PropertyManager(event.getServer().getFile("server.properties"));
-      worldName = settings.getStringProperty("level-name", worldName);
-      worldSaveDirectory = event.getServer().getFile(worldName);
     }
-    try {
-      WorldServer server = event.getServer().getWorld(0);
-      File worldLocation = server.getChunkSaveLocation();
-      // UndergroundBiomes.logger.info(world.toString() + " "
-      // +worldLocation.getAbsolutePath());
-      configManager.setWorldFile(worldLocation);
-    } catch (NullPointerException e) {
-      throw e;
-    }
+    onServerLoad(event.getServer());
+  }
+
+  public void onServerLoad(MinecraftServer server) {
+    if (server == null) return;
+    WorldServer worldServer = server.getWorld(0);
+    File worldLocation = worldServer.getChunkSaveLocation();
+    configManager.setWorldFile(worldLocation);
     dimensionManager.refreshManagers();
   }
 
   public void onServerStopped(FMLServerStoppedEvent event) {
-    // for some reason onWorldLoad is running before any of the ServerStartxxx
-    // events
-    // so I'm having to use a clunky workaround.
-    dimensionManager.clearWorldManagers();
+    dimensionManager.clear();
     OresRegistry.INSTANCE.recheckPile();
     for (Runnable action : serverCloseActions) {
       action.run();
@@ -209,19 +205,14 @@ public class CommonProxy {
       action.run();
     }
     oneShotServerCloseActions.clear();
-
   }
 
   public void runOnServerClose(Runnable action) {
     serverCloseActions.add(action);
   }
 
-  public void runOnNextServerCloseOnly(Runnable action) {
-    serverCloseActions.add(action);
-  }
-
-  private ArrayList<Runnable> oneShotServerCloseActions = new ArrayList<Runnable>();
-  private ArrayList<Runnable> serverCloseActions = new ArrayList<Runnable>();
+  private final ArrayList<Runnable> oneShotServerCloseActions = new ArrayList<>();
+  private final ArrayList<Runnable> serverCloseActions = new ArrayList<>();
 
   public void registerModels(ModelRegistryEvent event) {
     // Only used in Client, overwritten there
@@ -231,11 +222,6 @@ public class CommonProxy {
     /*
      * Blocks
      */
-    // new ActuallyAdditionsRegistrar().register(event);
-    // new ForestryRegistrar().register(event);
-    // new IC2Registrar().register(event);
-    // new ImmersiveEngineeringRegistrar().register(event);
-    // new ThermalFoundationRegistrar().register(event);
     API.MOD_ORE_REGISTRAR.requestOreSetups(event);
 
     LOGGER.debug("Start registering blocks");
