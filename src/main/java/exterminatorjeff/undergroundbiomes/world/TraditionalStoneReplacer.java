@@ -4,7 +4,7 @@
 package exterminatorjeff.undergroundbiomes.world;
 
 
-/**
+/*
  * @author curtisadams
  */
 
@@ -19,12 +19,12 @@ import net.minecraft.world.gen.layer.GenLayerZoom;
 
 public class TraditionalStoneReplacer extends UBStoneReplacer {
 
-  private GenLayer undergroundBiomeIndexLayer;
+  private final GenLayer undergroundBiomeIndexLayer;
 
   public TraditionalStoneReplacer(long seed, int size, UndergroundBiomeSet biomeSet) {
     super(biomeSet.allowedBiomes(), new SimplexNoiseGenerator(seed));
     if (biomeSet.allowedBiomes()[20].ID < 1) {
-      throw new RuntimeException(biomeSet.toString() + biomeSet.allowedBiomes()[20].filler.getBlock().getLocalizedName());
+      throw new RuntimeException(biomeSet + biomeSet.allowedBiomes()[20].filler.getBlock().getLocalizedName());
     }
     undergroundBiomeIndexLayer = biomeGenerators(seed, size, biomeSet);
   }
@@ -32,9 +32,7 @@ public class TraditionalStoneReplacer extends UBStoneReplacer {
 
   @Override
   public int[] getBiomeValues(Chunk chunk) {
-
-    int[] var7 = this.undergroundBiomeIndexLayer.getInts(chunk.getPos().x * 16, chunk.getPos().z * 16, 16, 16);
-    return var7;
+    return this.undergroundBiomeIndexLayer.getInts(chunk.getPos().x << 4, chunk.getPos().z << 4, 16, 16);
   }
 
   public static GenLayer biomeGenerators(long par0, int size, UndergroundBiomeSet biomeSet) {

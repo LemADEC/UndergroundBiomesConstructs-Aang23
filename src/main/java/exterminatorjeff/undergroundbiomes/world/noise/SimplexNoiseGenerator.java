@@ -33,8 +33,8 @@ import java.util.Random;
 public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
   protected static final double SQRT_3 = Math.sqrt(3);
   protected static final double SQRT_5 = Math.sqrt(5);
-  protected static final double F2 = 0.5 * (SQRT_3 - 1);
-  protected static final double G2 = (3 - SQRT_3) / 6;
+  protected static final double F2 = 0.5 * (SQRT_3 - 1.0);
+  protected static final double G2 = (3.0 - SQRT_3) / 6.0;
   protected static final double G22 = G2 * 2.0 - 1;
   protected static final double F3 = 1.0 / 3.0;
   protected static final double G3 = 1.0 / 6.0;
@@ -239,12 +239,12 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     // a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z), and
     // a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z), where
     // c = 1/6.
-    double x1 = x0 - i1 + G3; // Offsets for second corner in (x,y,z) coords
-    double y1 = y0 - j1 + G3;
-    double z1 = z0 - k1 + G3;
-    double x2 = x0 - i2 + 2.0 * G3; // Offsets for third corner in (x,y,z) coords
-    double y2 = y0 - j2 + 2.0 * G3;
-    double z2 = z0 - k2 + 2.0 * G3;
+    double x1 = x0 - i1  +       G3; // Offsets for second corner in (x,y,z) coords
+    double y1 = y0 - j1  +       G3;
+    double z1 = z0 - k1  +       G3;
+    double x2 = x0 - i2  + 2.0 * G3; // Offsets for third corner in (x,y,z) coords
+    double y2 = y0 - j2  + 2.0 * G3;
+    double z2 = z0 - k2  + 2.0 * G3;
     double x3 = x0 - 1.0 + 3.0 * G3; // Offsets for last corner in (x,y,z) coords
     double y3 = y0 - 1.0 + 3.0 * G3;
     double z3 = z0 - 1.0 + 3.0 * G3;
@@ -253,10 +253,10 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     int ii = i & 255;
     int jj = j & 255;
     int kk = k & 255;
-    int gi0 = perm[ii + perm[jj + perm[kk]]] % 12;
+    int gi0 = perm[ii      + perm[jj      + perm[kk     ]]] % 12;
     int gi1 = perm[ii + i1 + perm[jj + j1 + perm[kk + k1]]] % 12;
     int gi2 = perm[ii + i2 + perm[jj + j2 + perm[kk + k2]]] % 12;
-    int gi3 = perm[ii + 1 + perm[jj + 1 + perm[kk + 1]]] % 12;
+    int gi3 = perm[ii +  1 + perm[jj +  1 + perm[kk +  1]]] % 12;
 
     // Calculate the contribution from the four corners
     double t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;

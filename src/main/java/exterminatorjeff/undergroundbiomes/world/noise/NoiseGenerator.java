@@ -23,7 +23,7 @@ package exterminatorjeff.undergroundbiomes.world.noise;
  */
 public abstract class NoiseGenerator {
 
-  protected final int perm[] = new int[512];
+  protected final int[] perm = new int[512];
   protected double offsetX;
   protected double offsetY;
   protected double offsetZ;
@@ -42,8 +42,8 @@ public abstract class NoiseGenerator {
     return x * x * x * (x * (x * 6 - 15) + 10);
   }
 
-  protected static double lerp(double x, double y, double z) {
-    return y + x * (z - y);
+  protected static double lerp(double t, double a, double b) {
+    return a + t * (b - a);
   }
 
   protected static double grad(int hash, double x, double y, double z) {

@@ -27,10 +27,10 @@ import java.util.HashMap;
  * @author Zeno410
  */
 public class DimensionManager implements UBDimensionalStrataColumnProvider {
-  public HashMap<Integer, WorldGenManager> managers = new HashMap<Integer, WorldGenManager>();
+  public HashMap<Integer, WorldGenManager> managers = new HashMap<>();
   private boolean villageRegistered = false;
   private boolean oreRegistered = false;
-  private ConfigManager configManager;
+  private final ConfigManager configManager;
 
   public DimensionManager(ConfigManager configManager) {
     this.configManager = configManager;
@@ -94,7 +94,6 @@ public class DimensionManager implements UBDimensionalStrataColumnProvider {
     if (managers.size() == 0) serverLoad(event.getWorld().getMinecraftServer());
     int dimension = event.getWorld().provider.getDimension();
     WorldGenManager target = managers.get(dimension);
-    //if (dimension == 0) throw new RuntimeException(target.toString());
     if (target != null) target.onWorldLoad(event);
   }
 

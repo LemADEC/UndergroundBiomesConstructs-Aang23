@@ -49,23 +49,25 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
   public void replaceStoneInChunk(Chunk chunk) {
     boolean quarkpresent = Loader.isModLoaded("quark");
     int[] biomeValues = getBiomeValues(chunk);
-    int xPos = chunk.getPos().x * 16;
-    int zPos = chunk.getPos().z * 16;
+    int xPos = chunk.getPos().x << 4;
+    int zPos = chunk.getPos().z << 4;
     // TimeTracker.manager.start("overall");
 
     // For each storage array
     for (ExtendedBlockStorage storage : chunk.getBlockStorageArray()) {
       if (storage != null && !storage.isEmpty()) {
         int yPos = storage.getYLocation();
-        if (yPos >= UBConfig.SPECIFIC.generationHeight())
+        if (yPos >= UBConfig.SPECIFIC.generationHeight()) {
           return;
+        }
         //
         for (int x = 0; x < 16; ++x) {
           for (int z = 0; z < 16; ++z) {
             // Get the underground biome for the position
-            UBBiome currentBiome = biomeList[biomeValues[x * 16 + z]];
-            if (currentBiome == null)
-              throw new RuntimeException("" + biomeValues[x * 16 + z]);
+            UBBiome currentBiome = biomeList[biomeValues[(x << 4) + z]];
+            if (currentBiome == null) {
+              throw new RuntimeException("" + biomeValues[(x << 4) + z]);
+            }
             //
             // Perlin noise for strata layers height variation
             int variation = (int) (noiseGenerator.noise((xPos + x) / 55.533, (zPos + z) / 55.533, 3, 1, 0.5) * 10 - 5);
@@ -80,14 +82,13 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
                 continue;
               if (Block.isEqualTo(Blocks.WATER, currentBlock))
                 continue;
-              // TODO Test without
               if (currentBlock instanceof UBStone)
                 continue;
               /*
-               * Stone
+               * Stone and variants
                */
+              // Replace stone with UBified version
               if (currentBlock == Blocks.STONE) {
-                // Replace with UBified version
                 storage.set(x, y, z, currentBiome.getStrataBlockAtLayer(yPos + y + variation));
               } else if (currentBlock == Blocks.MONSTER_EGG && API.SETTINGS.replaceMonsterStone()) {
                 // Replace with UBified version
@@ -100,7 +101,7 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
                 }
                 continue;
               } else if (currentBlock == Blocks.COBBLESTONE && API.SETTINGS.replaceCobblestone()) {
-                // Replace with UBified version
+              // Replace cobblestone with UBified version
                 IBlockState strata = currentBiome.getStrataBlockAtLayer(yPos + y + variation);
                 if (strata.getBlock() instanceof UBStone) {
                   UBStone block = (UBStone) strata.getBlock();
@@ -118,18 +119,19 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
                 IBlockState strata = currentBiome.getStrataBlockAtLayer(yPos + y + variation);
                 if (strata.getBlock() instanceof UBStone) {
                   UBStone block = (UBStone) strata.getBlock();
-                  if (!snowy)
+                  if (!snowy) {
                     storage.set(x, y, z,
-                        (StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.OVERGROWN).getBlock())
-                            .getStateFromMeta(block.getMetaFromState(strata)));
-                  else
+                                (StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.OVERGROWN).getBlock())
+                                  .getStateFromMeta(block.getMetaFromState(strata)));
+                  } else {
                     storage.set(x, y, z,
-                        (StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.OVERGROWN_SNOWED)
-                            .getBlock()).getStateFromMeta(block.getMetaFromState(strata)));
+                                (StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.OVERGROWN_SNOWED).getBlock())
+                                  .getStateFromMeta(block.getMetaFromState(strata)));
+                  }
                 }
                 continue;
               } else if (currentBlock == Blocks.MOSSY_COBBLESTONE && API.SETTINGS.replaceMossyCobblestone()) {
-                // Replace with UBified version
+              // Replace mossy cobblestone with UBified version
                 IBlockState strata = currentBiome.getStrataBlockAtLayer(yPos + y + variation);
                 if (strata.getBlock() instanceof UBStone) {
                   UBStone block = (UBStone) strata.getBlock();
@@ -272,9 +274,8 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
       int[] biomeValues = getBiomeValues(chunk);
       for (BlockPos location : locations) {
         IBlockState currentBlockState = chunk.getBlockState(location);
-        UBBiome currentBiome = biomeList[biomeValues[(location.getX() & 15) * 16 + location.getZ() & 15]];
-        int variation = (int) (noiseGenerator.noise((location.getX()) / 55.533, (location.getZ()) / 55.533, 3, 1, 0.5)
-            * 10 - 5);
+        UBBiome currentBiome = biomeList[biomeValues[((location.getX() & 0xF) << 4) + (location.getZ() & 0xF)]];
+        int variation = (int) (noiseGenerator.noise((location.getX()) / 55.533, (location.getZ()) / 55.533, 3, 1, 0.5) * 10 - 5);
         IBlockState strata = currentBiome.getStrataBlockAtLayer(location.getY() + variation);
         Block strataBlock = strata.getBlock();
         if (!(strataBlock instanceof UBStone)) {
