@@ -191,6 +191,10 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
                 default:
                   continue;
                 }
+                // skip when base stone has no related slab
+                if (slab == null) {
+                  continue;
+                }
                 setBlock(world, storage, sendUpdates, x, y, z, currentBlockPos,
                          withProperty(slab.getDefaultState().withProperty(UBStoneSlab.HALF, enumBlockHalf),
                                       slab.getVariantProperty(), strata.getValue(slab.getVariantProperty()) ));
@@ -230,6 +234,10 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
                 default:
                   continue;
                 }
+                // skip when base stone has no related slab
+                if (slab == null) {
+                  continue;
+                }
                 setBlock(world, storage, sendUpdates, x, y, z, currentBlockPos,
                          withProperty(slab.getDefaultState(),
                                       slab.getVariantProperty(), strata.getValue(slab.getVariantProperty()) ));
@@ -251,6 +259,10 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
                   wall = (UBStoneWall) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.COBBLE).getWall().getBlock();
                   break;
                 default:
+                  continue;
+                }
+                // skip when base stone has no related wall
+                if (wall == null) {
                   continue;
                 }
                 setBlock(world, storage, sendUpdates, x, y, z, currentBlockPos,
