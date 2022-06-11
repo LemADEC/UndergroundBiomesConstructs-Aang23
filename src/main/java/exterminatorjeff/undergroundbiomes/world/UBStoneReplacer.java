@@ -56,7 +56,7 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
 
   @SuppressWarnings("deprecation")
   public void replaceStoneInChunk(World world, Chunk chunk, final boolean sendUpdates) {
-    boolean quarkpresent = Loader.isModLoaded("quark");
+    boolean isQuarkLoaded = Loader.isModLoaded("quark");
     int[] biomeValues = getBiomeValues(chunk);
     int xPos = chunk.getPos().x << 4;
     int zPos = chunk.getPos().z << 4;
@@ -267,7 +267,7 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
               }
               continue;
             }
-            // Replace Biomes'o Plenty grass with UBified version
+            // Replace Biomes' o Plenty grass with UBified version
             if ( Objects.requireNonNull(currentBlock.getRegistryName()).toString().equals("biomesoplenty:grass")
               && currentBlockState.getProperties().toString().contains("=overgrown_stone")
               && API.SETTINGS.replaceOvergrown() ) {
@@ -364,7 +364,7 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
               continue;
             }
             // Replace Quark Speleothem with UBified version
-            if ( quarkpresent
+            if ( isQuarkLoaded
               && API.SETTINGS.replaceSpeleothems()
               && currentBlock instanceof BlockSpeleothem ) {
               IBlockState strata = currentBiome.getStrataBlockAtLayer(yPos + y + variation);
