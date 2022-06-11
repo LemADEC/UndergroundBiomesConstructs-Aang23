@@ -5,7 +5,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import exterminatorjeff.undergroundbiomes.api.ModInfo;
-import exterminatorjeff.undergroundbiomes.api.common.UBLogger;
 import exterminatorjeff.undergroundbiomes.common.block.UBOre;
 import exterminatorjeff.undergroundbiomes.intermod.OresRegistry;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -20,7 +19,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import mcp.MethodsReturnNonnullByDefault;
-import org.apache.logging.log4j.Level;
 
 import java.util.Collection;
 
@@ -35,7 +33,6 @@ import java.util.Collection;
 @SideOnly(Side.CLIENT)
 public class UBOreModel implements IModel {
 
-  public static final UBLogger LOGGER = new UBLogger(UBOreModel.class, Level.INFO);
   public static final String UBORE_MODEL_NAME = "custom_ore";
   public static final String UBORE_MODEL_PATH = ModInfo.MODID + ":block/" + UBORE_MODEL_NAME;
 

@@ -38,8 +38,6 @@ import exterminatorjeff.undergroundbiomes.api.enums.UBStoneType;
 import exterminatorjeff.undergroundbiomes.api.API;
 import net.minecraftforge.fml.common.Loader;
 
-import static exterminatorjeff.undergroundbiomes.client.UBOreModel.LOGGER;
-
 public abstract class UBStoneReplacer implements UBStrataColumnProvider {
 
   final UBBiome[] biomeList;
@@ -74,7 +72,6 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
       if (yPos >= UBConfig.SPECIFIC.generationHeight()) {
         return;
       }
-      LOGGER.info(String.format("replaceStoneInChunk(%d, %d): yPos %d", chunk.x, chunk.z, yPos));
       MutableBlockPos currentBlockPos = new MutableBlockPos();
       for (int x = 0; x < 16; ++x) {
         for (int z = 0; z < 16; ++z) {
