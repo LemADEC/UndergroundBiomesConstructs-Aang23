@@ -5,6 +5,7 @@ package exterminatorjeff.undergroundbiomes.world;
 
 import exterminatorjeff.undergroundbiomes.api.*;
 import exterminatorjeff.undergroundbiomes.api.enums.UBStoneStyle;
+import exterminatorjeff.undergroundbiomes.api.names.SlabEntry;
 import exterminatorjeff.undergroundbiomes.common.block.UBStone;
 import exterminatorjeff.undergroundbiomes.common.block.slab.UBStoneSlab;
 import exterminatorjeff.undergroundbiomes.common.block.wall.UBStoneWall;
@@ -162,33 +163,37 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
               IBlockState strata = currentBiome.getStrataBlockAtLayer(yPos + y + variation);
               if (strata.getBlock() instanceof UBStone) {
                 UBStone block = (UBStone) strata.getBlock();
-                UBStoneSlab slab;
+                SlabEntry slabEntry;
                 switch (typeVanilla) {
                 case STONE:
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.STONE).getSlab().getHalfSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.STONE).getSlab();
                   break;
                 case COBBLESTONE:
                   if (!API.SETTINGS.replaceCobblestone()) {
                     continue;
                   }
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.COBBLE).getSlab().getHalfSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.COBBLE).getSlab();
                   break;
                 case SMOOTHBRICK:
                   if (!API.SETTINGS.replaceStoneBrick()) {
                     continue;
                   }
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.BRICK).getSlab().getHalfSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.BRICK).getSlab();
                   break;
                 case SAND:
                   if (!API.SETTINGS.replaceSandstone()) {
                     continue;
                   }
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.SANDSTONE).getSlab().getHalfSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.SANDSTONE).getSlab();
                   break;
                 default:
                   continue;
                 }
                 // skip when base stone has no related slab
+                if (slabEntry == null) {
+                  continue;
+                }
+                UBStoneSlab slab = (UBStoneSlab) slabEntry.getHalfSlab();
                 if (slab == null) {
                   continue;
                 }
@@ -205,33 +210,37 @@ public abstract class UBStoneReplacer implements UBStrataColumnProvider {
               IBlockState strata = currentBiome.getStrataBlockAtLayer(yPos + y + variation);
               if (strata.getBlock() instanceof UBStone) {
                 UBStone block = (UBStone) strata.getBlock();
-                UBStoneSlab slab;
+                SlabEntry slabEntry;
                 switch (typeVanilla) {
                 case STONE:
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.STONE).getSlab().getFullSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.STONE).getSlab();
                   break;
                 case COBBLESTONE:
                   if (!API.SETTINGS.replaceCobblestone()) {
                     continue;
                   }
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.COBBLE).getSlab().getFullSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.COBBLE).getSlab();
                   break;
                 case SMOOTHBRICK:
                   if (!API.SETTINGS.replaceStoneBrick()) {
                     continue;
                   }
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.BRICK).getSlab().getFullSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.BRICK).getSlab();
                   break;
                 case SAND:
                   if (!API.SETTINGS.replaceSandstone()) {
                     continue;
                   }
-                  slab = (UBStoneSlab) StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.SANDSTONE).getSlab().getFullSlab();
+                  slabEntry = StonesRegistry.INSTANCE.stoneFor(block.getStoneType(), UBStoneStyle.SANDSTONE).getSlab();
                   break;
                 default:
                   continue;
                 }
                 // skip when base stone has no related slab
+                if (slabEntry == null) {
+                  continue;
+                }
+                UBStoneSlab slab = (UBStoneSlab) slabEntry.getFullSlab();
                 if (slab == null) {
                   continue;
                 }
